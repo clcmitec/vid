@@ -18,65 +18,58 @@
 
 <title>My Drive Videos</title>
 
+<!-- Inter Font for Threads Aesthetic -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* =====================================================
-   RESET
+   RESET & THREADS LIGHT STYLES
 ===================================================== */
 
+:root {
+  --bg-color: #ffffff;
+  --card-bg: #f9f9f9;
+  --card-border: #e5e5e5;
+  --card-hover: #f0f0f0;
+  --text-primary: #000000;
+  --text-secondary: #777777;
+  --accent-black: #000000;
+  --accent-white: #ffffff;
+  --input-bg: #f4f4f4;
+  --input-border: #e0e0e0;
+}
+
 * {
-
   box-sizing: border-box;
-
-  -webkit-tap-highlight-color:
-    transparent;
-
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-
   margin: 0;
-
   padding: 0;
-
   width: 100%;
-
   height: 100%;
-
   overflow: hidden;
-
-  background: #08419e;
-
-  color: #fff;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
+  background: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 
 /* =====================================================
-   APP
+   APP STRUCTURE
 ===================================================== */
 
 #app {
-
   width: 100%;
-
   height: 100%;
-
   display: flex;
-
   flex-direction: column;
-
-  background: #090b0e;
-
+  background: var(--bg-color);
 }
 
 
@@ -85,41 +78,24 @@ body {
 ===================================================== */
 
 .header {
-
-  height: 58px;
-
+  height: 60px;
   flex-shrink: 0;
-
   display: flex;
-
   align-items: center;
-
-  padding:
-    env(safe-area-inset-top)
-    16px
-    0
-    16px;
-
-  background: #111419;
-
-  border-bottom:
-    1px solid #20252b;
-
+  justify-content: center;
+  padding: env(safe-area-inset-top) 16px 0 16px;
+  background: #131f13;
+  border-bottom: 1px solid var(--card-border);
 }
 
-
 .header-title {
-
-  font-size: 17px;
-
+  font-size: 16px;
   font-weight: 700;
-
+  letter-spacing: -0.3px;
+  color: #fff;
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
 }
 
 
@@ -128,17 +104,11 @@ body {
 ===================================================== */
 
 .player {
-
   width: 100%;
-
   aspect-ratio: 16 / 9;
-
   background: #000;
-
   border: 0;
-
   display: block;
-
 }
 
 
@@ -147,61 +117,39 @@ body {
 ===================================================== */
 
 .content {
-
   flex: 1;
-
   overflow-y: auto;
-
-  -webkit-overflow-scrolling:
-    touch;
-
-  padding:
-    14px
-    14px
-    calc(
-      90px +
-      env(safe-area-inset-bottom)
-    )
-    14px;
-
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(96px + env(safe-area-inset-bottom)) 16px;
 }
 
 
 /* =====================================================
-   SEARCH
+   SEARCH BAR
 ===================================================== */
 
 .search {
-
   width: 100%;
-
-  height: 46px;
-
-  border-radius: 13px;
-
-  border:
-    1px solid #292f36;
-
-  background: #171b20;
-
-  color: #fff;
-
+  height: 44px;
+  border-radius: 16px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-primary);
   outline: none;
-
-  padding:
-    0 15px;
-
-  font-size: 16px;
-
-  margin-bottom: 12px;
-
+  padding: 0 16px;
+  font-size: 14px;
+  font-family: inherit;
+  margin-bottom: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
+.search::placeholder {
+  color: var(--text-secondary);
+}
 
 .search:focus {
-
-  border-color: #4285f4;
-
+  border-color: #000000;
+  background: #ffffff;
 }
 
 
@@ -210,473 +158,304 @@ body {
 ===================================================== */
 
 .folder-bar {
-
   display: flex;
-
   align-items: center;
-
-  gap: 8px;
-
-  margin-bottom: 12px;
-
+  gap: 12px;
+  margin-bottom: 14px;
 }
-
 
 .back {
-
-  width: 42px;
-
-  height: 42px;
-
-  border: 0;
-
-  border-radius: 12px;
-
-  background: #1b2026;
-
-  color: white;
-
-  font-size: 25px;
-
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--card-border);
+  border-radius: 50%;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
+.back:active {
+  background: var(--card-hover);
+}
 
 .folder-name {
-
   flex: 1;
-
   min-width: 0;
-
-  font-size: 16px;
-
-  font-weight: 700;
-
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
 }
 
 
 /* =====================================================
-   ITEM
+   THREADS LIGHT ITEM CARDS
 ===================================================== */
 
 .item {
-
   min-height: 64px;
-
   width: 100%;
-
   display: flex;
-
   align-items: center;
-
-  gap: 12px;
-
-  margin-bottom: 8px;
-
-  padding: 10px 11px;
-
-  background: #15191e;
-
-  border:
-    1px solid #22282e;
-
-  border-radius: 14px;
-
+  gap: 14px;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  transition: background 0.15s ease, transform 0.1s ease;
+  cursor: pointer;
 }
-
 
 .item:active {
-
-  transform:
-    scale(.985);
-
-  background: #20252b;
-
+  transform: scale(0.99);
+  background: var(--card-hover);
 }
-
 
 .icon {
-
-  width: 42px;
-
-  height: 42px;
-
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-
   border-radius: 12px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  font-size: 20px;
-
-  background: #20262c;
-
+  font-size: 18px;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
 }
 
+.icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
 
 .info {
-
   flex: 1;
-
   min-width: 0;
-
 }
-
 
 .name {
-
   font-size: 14px;
-
   font-weight: 600;
-
-  line-height: 1.3;
-
+  color: var(--text-primary);
+  line-height: 1.35;
+  letter-spacing: -0.1px;
   overflow: hidden;
-
   display: -webkit-box;
-
   -webkit-line-clamp: 2;
-
   -webkit-box-orient: vertical;
-
 }
-
 
 .meta {
-
   margin-top: 3px;
-
-  color: #7e8790;
-
-  font-size: 11px;
-
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 
-
 .play {
-
-  width: 42px;
-
-  height: 42px;
-
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
-
   border: 0;
-
   border-radius: 50%;
-
-  background: #4285f4;
-
-  color: white;
-
-  font-size: 17px;
-
+  background: var(--accent-black);
+  color: var(--accent-white);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
 
 /* =====================================================
-   LOADING / EMPTY
+   LOADING / EMPTY STATES
 ===================================================== */
 
 .loading,
 .empty {
-
-  padding: 50px 20px;
-
+  padding: 60px 20px;
   text-align: center;
-
-  color: #7d858d;
-
+  color: var(--text-secondary);
   font-size: 14px;
-
 }
 
 
 /* =====================================================
-   BOTTOM CORNER
+   BOTTOM CORNER BUTTON (THREADS LIGHT FAB)
 ===================================================== */
 
 .corner-zone {
-
   position: fixed;
-
-  right: 0;
-
-  bottom: 0;
-
-  width: 76px;
-
-  height: 76px;
-
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
   z-index: 90;
-
-  display: flex;
-
-  justify-content: flex-end;
-
-  align-items: flex-end;
-
-  padding:
-    0
-    10px
-    calc(
-      10px +
-      env(safe-area-inset-bottom)
-    )
-    0;
-
 }
 
-
 .corner-button {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  border: 1px solid var(--card-border);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
 
-  width: 46px;
-
-  height: 46px;
-
-  border-radius: 50%;
-
-  border:
-    1px solid #343a41;
-
-  background: #171b20;
-
-  color: white;
-
-  font-size: 22px;
-
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.5);
-
+.corner-button:active {
+  transform: scale(0.94);
+  background: var(--card-hover);
 }
 
 
 /* =====================================================
-   DRAWER BACKDROP
+   DRAWER & BACKDROP
 ===================================================== */
 
 .backdrop {
-
   position: fixed;
-
   inset: 0;
-
   z-index: 200;
-
-  background:
-    rgba(0,0,0,.6);
-
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
   display: none;
-
 }
-
 
 .backdrop.open {
-
   display: block;
-
 }
-
-
-/* =====================================================
-   DRAWER
-===================================================== */
 
 .drawer {
-
   position: fixed;
-
   left: 0;
-
   right: 0;
-
   bottom: 0;
-
   z-index: 201;
-
   max-height: 85vh;
-
   overflow-y: auto;
-
-  padding:
-    10px
-    16px
-    calc(
-      18px +
-      env(safe-area-inset-bottom)
-    );
-
-  background: #15191e;
-
-  border-radius:
-    22px
-    22px
-    0
-    0;
-
-  transform:
-    translateY(100%);
-
-  transition:
-    transform .25s ease;
-
+  padding: 12px 16px calc(24px + env(safe-area-inset-bottom));
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  border-top: 1px solid var(--card-border);
+  transform: translateY(100%);
+  transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
-
 
 .drawer.open {
-
-  transform:
-    translateY(0);
-
+  transform: translateY(0);
 }
-
 
 .handle {
-
-  width: 42px;
-
+  width: 36px;
   height: 4px;
-
-  border-radius: 10px;
-
-  background: #4b535c;
-
-  margin:
-    3px auto 18px;
-
+  border-radius: 2px;
+  background: #dddddd;
+  margin: 0 auto 18px;
 }
-
 
 .drawer-title {
-
-  font-size: 19px;
-
+  font-size: 16px;
   font-weight: 700;
-
-  margin-bottom: 15px;
-
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  text-align: center;
 }
-
 
 .drawer-button {
-
   width: 100%;
-
-  height: 52px;
-
-  border: 1px solid #292f36;
-
-  border-radius: 13px;
-
-  background: #1c2127;
-
-  color: white;
-
+  height: 50px;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: var(--card-bg);
+  color: var(--text-primary);
   text-align: left;
-
   padding: 0 16px;
-
-  margin-bottom: 9px;
-
-  font-size: 15px;
-
+  margin-bottom: 8px;
+  font-size: 14px;
   font-weight: 600;
-
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
 }
 
-
 .drawer-button:active {
-
-  background: #292f36;
-
+  background: var(--card-hover);
 }
 
 
 /* =====================================================
-   MOVE VIEW
+   MOVE VIEW & INPUTS
 ===================================================== */
 
 .move-view {
-
   display: none;
-
+  margin-top: 8px;
 }
-
 
 .move-view.show {
-
   display: block;
-
 }
-
 
 .label {
-
   display: block;
-
-  color: #9aa2aa;
-
+  color: var(--text-secondary);
   font-size: 12px;
-
-  margin:
-    10px 0 7px;
-
+  margin: 12px 0 6px;
+  font-weight: 500;
 }
 
-
-.select {
-
+.select,
+.text-input {
   width: 100%;
-
-  height: 48px;
-
+  height: 46px;
   border-radius: 12px;
-
-  border:
-    1px solid #30363d;
-
-  background: #0d1013;
-
-  color: white;
-
-  padding:
-    0 10px;
-
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  padding: 0 12px;
   font-size: 14px;
-
+  font-family: inherit;
+  outline: none;
 }
 
+.select:focus,
+.text-input:focus {
+  border-color: #000000;
+  background: #ffffff;
+}
 
 .primary {
-
   width: 100%;
-
-  height: 50px;
-
-  margin-top: 12px;
-
+  height: 48px;
+  margin-top: 16px;
   border: 0;
-
-  border-radius: 12px;
-
-  background: #4285f4;
-
-  color: white;
-
+  border-radius: 14px;
+  background: var(--accent-black);
+  color: var(--accent-white);
   font-weight: 700;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
 
-  font-size: 15px;
-
+.primary:active {
+  opacity: 0.85;
 }
 
 
@@ -685,83 +464,28 @@ body {
 ===================================================== */
 
 .toast {
-
   position: fixed;
-
   left: 50%;
-
-  bottom:
-    calc(
-      82px +
-      env(safe-area-inset-bottom)
-    );
-
-  transform:
-    translate(-50%, 20px);
-
+  bottom: calc(84px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 20px);
   opacity: 0;
-
   pointer-events: none;
-
   z-index: 500;
-
-  background: #f1f3f4;
-
-  color: #111;
-
-  padding:
-    11px
-    16px;
-
-  border-radius: 12px;
-
+  background: var(--accent-black);
+  color: var(--accent-white);
+  padding: 10px 18px;
+  border-radius: 20px;
   font-size: 13px;
-
-  transition: .25s ease;
-
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
   white-space: nowrap;
-
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
-
 
 .toast.show {
-
   opacity: 1;
-
-  transform:
-    translate(-50%, 0);
-
+  transform: translate(-50%, 0);
 }
-
-
-/* =====================================================
-   CREATE FOLDER
-===================================================== */
-
-.text-input {
-
-  width: 100%;
-
-  height: 48px;
-
-  border:
-    1px solid #30363d;
-
-  border-radius: 12px;
-
-  background: #0d1013;
-
-  color: white;
-
-  padding:
-    0 13px;
-
-  font-size: 15px;
-
-  outline: none;
-
-}
-
 
 </style>
 
@@ -1014,6 +738,9 @@ const API_URL =
 
 const API_KEY =
   "zqyH&F5YK";
+
+const FOLDER_ICON_URL =
+  "https://cdn-icons-png.flaticon.com/512/10828/10828574.png";
 
 
 /* =====================================================
@@ -1360,7 +1087,7 @@ function renderFolder(
       item.innerHTML = `
 
         <div class="icon">
-          📁
+          <img class="icon-img" src="${FOLDER_ICON_URL}" alt="Folder">
         </div>
 
         <div class="info">
@@ -1687,7 +1414,7 @@ function renderSearchResults(
       item.innerHTML = `
 
         <div class="icon">
-          📁
+          <img class="icon-img" src="${FOLDER_ICON_URL}" alt="Folder">
         </div>
 
         <div class="info">
