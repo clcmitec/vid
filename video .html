@@ -1,0 +1,2419 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="
+    width=device-width,
+    initial-scale=1,
+    maximum-scale=1,
+    user-scalable=no,
+    viewport-fit=cover
+  ">
+
+<title>My Drive Videos</title>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+
+  box-sizing: border-box;
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+}
+
+html,
+body {
+
+  margin: 0;
+
+  padding: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #090b0e;
+
+  color: #fff;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+}
+
+
+/* =====================================================
+   APP
+===================================================== */
+
+#app {
+
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #090b0e;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+  height: 58px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  padding:
+    env(safe-area-inset-top)
+    16px
+    0
+    16px;
+
+  background: #111419;
+
+  border-bottom:
+    1px solid #20252b;
+
+}
+
+
+.header-title {
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+.player {
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  background: #000;
+
+  border: 0;
+
+  display: block;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  -webkit-overflow-scrolling:
+    touch;
+
+  padding:
+    14px
+    14px
+    calc(
+      90px +
+      env(safe-area-inset-bottom)
+    )
+    14px;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search {
+
+  width: 100%;
+
+  height: 46px;
+
+  border-radius: 13px;
+
+  border:
+    1px solid #292f36;
+
+  background: #171b20;
+
+  color: #fff;
+
+  outline: none;
+
+  padding:
+    0 15px;
+
+  font-size: 16px;
+
+  margin-bottom: 12px;
+
+}
+
+
+.search:focus {
+
+  border-color: #4285f4;
+
+}
+
+
+/* =====================================================
+   FOLDER BAR
+===================================================== */
+
+.folder-bar {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 12px;
+
+}
+
+
+.back {
+
+  width: 42px;
+
+  height: 42px;
+
+  border: 0;
+
+  border-radius: 12px;
+
+  background: #1b2026;
+
+  color: white;
+
+  font-size: 25px;
+
+}
+
+
+.folder-name {
+
+  flex: 1;
+
+  min-width: 0;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+}
+
+
+/* =====================================================
+   ITEM
+===================================================== */
+
+.item {
+
+  min-height: 64px;
+
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+
+  padding: 10px 11px;
+
+  background: #15191e;
+
+  border:
+    1px solid #22282e;
+
+  border-radius: 14px;
+
+}
+
+
+.item:active {
+
+  transform:
+    scale(.985);
+
+  background: #20252b;
+
+}
+
+
+.icon {
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 20px;
+
+  background: #20262c;
+
+}
+
+
+.info {
+
+  flex: 1;
+
+  min-width: 0;
+
+}
+
+
+.name {
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  line-height: 1.3;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+
+  -webkit-box-orient: vertical;
+
+}
+
+
+.meta {
+
+  margin-top: 3px;
+
+  color: #7e8790;
+
+  font-size: 11px;
+
+}
+
+
+.play {
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #4285f4;
+
+  color: white;
+
+  font-size: 17px;
+
+}
+
+
+/* =====================================================
+   LOADING / EMPTY
+===================================================== */
+
+.loading,
+.empty {
+
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #7d858d;
+
+  font-size: 14px;
+
+}
+
+
+/* =====================================================
+   BOTTOM CORNER
+===================================================== */
+
+.corner-zone {
+
+  position: fixed;
+
+  right: 0;
+
+  bottom: 0;
+
+  width: 76px;
+
+  height: 76px;
+
+  z-index: 90;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: flex-end;
+
+  padding:
+    0
+    10px
+    calc(
+      10px +
+      env(safe-area-inset-bottom)
+    )
+    0;
+
+}
+
+
+.corner-button {
+
+  width: 46px;
+
+  height: 46px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid #343a41;
+
+  background: #171b20;
+
+  color: white;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.5);
+
+}
+
+
+/* =====================================================
+   DRAWER BACKDROP
+===================================================== */
+
+.backdrop {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 200;
+
+  background:
+    rgba(0,0,0,.6);
+
+  display: none;
+
+}
+
+
+.backdrop.open {
+
+  display: block;
+
+}
+
+
+/* =====================================================
+   DRAWER
+===================================================== */
+
+.drawer {
+
+  position: fixed;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  z-index: 201;
+
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  padding:
+    10px
+    16px
+    calc(
+      18px +
+      env(safe-area-inset-bottom)
+    );
+
+  background: #15191e;
+
+  border-radius:
+    22px
+    22px
+    0
+    0;
+
+  transform:
+    translateY(100%);
+
+  transition:
+    transform .25s ease;
+
+}
+
+
+.drawer.open {
+
+  transform:
+    translateY(0);
+
+}
+
+
+.handle {
+
+  width: 42px;
+
+  height: 4px;
+
+  border-radius: 10px;
+
+  background: #4b535c;
+
+  margin:
+    3px auto 18px;
+
+}
+
+
+.drawer-title {
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+
+}
+
+
+.drawer-button {
+
+  width: 100%;
+
+  height: 52px;
+
+  border: 1px solid #292f36;
+
+  border-radius: 13px;
+
+  background: #1c2127;
+
+  color: white;
+
+  text-align: left;
+
+  padding: 0 16px;
+
+  margin-bottom: 9px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+}
+
+
+.drawer-button:active {
+
+  background: #292f36;
+
+}
+
+
+/* =====================================================
+   MOVE VIEW
+===================================================== */
+
+.move-view {
+
+  display: none;
+
+}
+
+
+.move-view.show {
+
+  display: block;
+
+}
+
+
+.label {
+
+  display: block;
+
+  color: #9aa2aa;
+
+  font-size: 12px;
+
+  margin:
+    10px 0 7px;
+
+}
+
+
+.select {
+
+  width: 100%;
+
+  height: 48px;
+
+  border-radius: 12px;
+
+  border:
+    1px solid #30363d;
+
+  background: #0d1013;
+
+  color: white;
+
+  padding:
+    0 10px;
+
+  font-size: 14px;
+
+}
+
+
+.primary {
+
+  width: 100%;
+
+  height: 50px;
+
+  margin-top: 12px;
+
+  border: 0;
+
+  border-radius: 12px;
+
+  background: #4285f4;
+
+  color: white;
+
+  font-weight: 700;
+
+  font-size: 15px;
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast {
+
+  position: fixed;
+
+  left: 50%;
+
+  bottom:
+    calc(
+      82px +
+      env(safe-area-inset-bottom)
+    );
+
+  transform:
+    translate(-50%, 20px);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 500;
+
+  background: #f1f3f4;
+
+  color: #111;
+
+  padding:
+    11px
+    16px;
+
+  border-radius: 12px;
+
+  font-size: 13px;
+
+  transition: .25s ease;
+
+  white-space: nowrap;
+
+}
+
+
+.toast.show {
+
+  opacity: 1;
+
+  transform:
+    translate(-50%, 0);
+
+}
+
+
+/* =====================================================
+   CREATE FOLDER
+===================================================== */
+
+.text-input {
+
+  width: 100%;
+
+  height: 48px;
+
+  border:
+    1px solid #30363d;
+
+  border-radius: 12px;
+
+  background: #0d1013;
+
+  color: white;
+
+  padding:
+    0 13px;
+
+  font-size: 15px;
+
+  outline: none;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+
+  <header class="header">
+
+    <div
+      id="title"
+      class="header-title">
+
+      My Drive
+
+    </div>
+
+  </header>
+
+
+  <iframe
+    id="player"
+    class="player"
+    style="display:none"
+    allow="autoplay; fullscreen"
+    allowfullscreen>
+  </iframe>
+
+
+  <main class="content">
+
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      placeholder="Search videos or folders...">
+
+
+    <div class="folder-bar">
+
+      <button
+        id="back"
+        class="back"
+        style="display:none"
+        onclick="goBack()">
+
+        ‹
+
+      </button>
+
+
+      <div
+        id="folderName"
+        class="folder-name">
+
+        Loading...
+
+      </div>
+
+    </div>
+
+
+    <div id="list">
+
+      <div class="loading">
+
+        Connecting to Drive...
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+</div>
+
+
+<!-- ==================================================
+     BOTTOM CORNER BUTTON
+================================================== -->
+
+<div class="corner-zone">
+
+  <button
+    class="corner-button"
+    onclick="openDrawer()">
+
+    ⋮
+
+  </button>
+
+</div>
+
+
+<!-- ==================================================
+     DRAWER
+================================================== -->
+
+<div
+  id="backdrop"
+  class="backdrop"
+  onclick="closeDrawer()">
+</div>
+
+
+<div
+  id="drawer"
+  class="drawer">
+
+  <div class="handle"></div>
+
+  <div class="drawer-title">
+
+    Drive Management
+
+  </div>
+
+
+  <button
+    class="drawer-button"
+    onclick="
+      refresh();
+      closeDrawer();
+    ">
+
+    🔄 &nbsp; Refresh
+
+
+  </button>
+
+
+  <button
+    class="drawer-button"
+    onclick="openMoveView()">
+
+    ↔️ &nbsp; Move Video
+
+
+  </button>
+
+
+  <button
+    class="drawer-button"
+    onclick="createFolderUI()">
+
+    📁 &nbsp; Create Folder
+
+
+  </button>
+
+
+  <button
+    class="drawer-button"
+    onclick="closeDrawer()">
+
+    ✕ &nbsp; Close
+
+  </button>
+
+
+  <!-- MOVE -->
+
+  <div
+    id="moveView"
+    class="move-view">
+
+
+    <div class="label">
+
+      Selected video
+
+    </div>
+
+
+    <select
+      id="videoSelect"
+      class="select">
+
+    </select>
+
+
+    <div class="label">
+
+      Destination folder
+
+    </div>
+
+
+    <select
+      id="folderSelect"
+      class="select">
+
+    </select>
+
+
+    <button
+      class="primary"
+      onclick="moveSelected()">
+
+      Move Video
+
+    </button>
+
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     TOAST
+================================================== -->
+
+<div
+  id="toast"
+  class="toast">
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   CONFIGURATION
+===================================================== */
+
+/*
+ * PUT YOUR APPS SCRIPT WEB APP URL HERE.
+ *
+ * Example:
+ *
+ * https://script.google.com/macros/s/
+ * ABC123456789/exec
+ */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbw9RtHkDeLeP7xXBFKpVtEahx_0vbavLchnh7-T69hYmwOC3J7wuoSKCpWfj1VZ9FCwfQ/exec";
+
+
+/*
+ * MUST MATCH Code.gs
+ */
+
+const API_KEY =
+  "zqyH&F5YK";
+
+
+/* =====================================================
+   APP STATE
+===================================================== */
+
+let currentFolderId = null;
+
+let currentFolderName = '';
+
+let folderHistory = [];
+
+let currentFolders = [];
+
+let currentVideos = [];
+
+let selectedVideo = null;
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    loadRoot();
+
+  }
+);
+
+
+/* =====================================================
+   JSONP REQUEST
+===================================================== */
+
+function apiGet(
+  action,
+  params = {}
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const callbackName =
+        'jsonp_' +
+        Date.now() +
+        '_' +
+        Math.floor(
+          Math.random() * 100000
+        );
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      const query =
+        new URLSearchParams();
+
+
+      query.set(
+        'action',
+        action
+      );
+
+
+      query.set(
+        'callback',
+        callbackName
+      );
+
+
+      query.set(
+        'key',
+        API_KEY
+      );
+
+
+      Object.keys(params)
+        .forEach(function(key) {
+
+          query.set(
+            key,
+            params[key]
+          );
+
+        });
+
+
+      const timeout =
+        setTimeout(
+          function() {
+
+            cleanup();
+
+            reject(
+              new Error(
+                'Request timed out.'
+              )
+            );
+
+          },
+          15000
+        );
+
+
+      window[callbackName] =
+        function(data) {
+
+          clearTimeout(timeout);
+
+          cleanup();
+
+          if (
+            data &&
+            data.success === false
+          ) {
+
+            reject(
+              new Error(
+                data.error ||
+                'Server error.'
+              )
+            );
+
+            return;
+
+          }
+
+          resolve(data);
+
+        };
+
+
+      function cleanup() {
+
+        delete window[
+          callbackName
+        ];
+
+        if (script.parentNode) {
+
+          script.parentNode
+            .removeChild(script);
+
+        }
+
+      }
+
+
+      script.onerror =
+        function() {
+
+          clearTimeout(timeout);
+
+          cleanup();
+
+          reject(
+            new Error(
+              'Could not connect to Apps Script.'
+            )
+          );
+
+        };
+
+
+      script.src =
+        API_URL +
+        '?' +
+        query.toString();
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ROOT
+===================================================== */
+
+async function loadRoot() {
+
+  showLoading();
+
+  try {
+
+    const data =
+      await apiGet('root');
+
+
+    currentFolderId =
+      data.folder.id;
+
+    currentFolderName =
+      data.folder.name;
+
+    folderHistory = [];
+
+
+    await loadFolder(
+      currentFolderId
+    );
+
+  }
+
+  catch (error) {
+
+    showError(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD FOLDER
+===================================================== */
+
+async function loadFolder(
+  folderId
+) {
+
+  showLoading();
+
+  try {
+
+    const data =
+      await apiGet(
+        'contents',
+        {
+          folderId:
+            folderId
+        }
+      );
+
+
+    currentFolderId =
+      data.folder.id;
+
+    currentFolderName =
+      data.folder.name;
+
+    currentFolders =
+      data.folders || [];
+
+    currentVideos =
+      data.videos || [];
+
+
+    renderFolder(
+      data
+    );
+
+  }
+
+  catch (error) {
+
+    showError(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER FOLDER
+===================================================== */
+
+function renderFolder(
+  data
+) {
+
+  document.getElementById(
+    'title'
+  ).textContent =
+    data.folder.name;
+
+
+  document.getElementById(
+    'folderName'
+  ).textContent =
+    data.folder.name;
+
+
+  document.getElementById(
+    'back'
+  ).style.display =
+    folderHistory.length
+      ? 'block'
+      : 'none';
+
+
+  const list =
+    document.getElementById(
+      'list'
+    );
+
+
+  list.innerHTML = '';
+
+
+  if (
+    !data.folders.length &&
+    !data.videos.length
+  ) {
+
+    list.innerHTML =
+      '<div class="empty">' +
+      'This folder is empty.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  /* ---------------------------------
+     FOLDERS
+  --------------------------------- */
+
+  data.folders.forEach(
+    function(folder) {
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'item';
+
+
+      item.innerHTML = `
+
+        <div class="icon">
+          📁
+        </div>
+
+        <div class="info">
+
+          <div class="name">
+            ${escapeHtml(folder.name)}
+          </div>
+
+          <div class="meta">
+            Folder
+          </div>
+
+        </div>
+
+        <div>
+          ›
+        </div>
+
+      `;
+
+
+      item.onclick =
+        function() {
+
+          folderHistory.push({
+
+            id:
+              currentFolderId,
+
+            name:
+              currentFolderName
+
+          });
+
+
+          loadFolder(
+            folder.id
+          );
+
+        };
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  /* ---------------------------------
+     VIDEOS
+  --------------------------------- */
+
+  data.videos.forEach(
+    function(video) {
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'item';
+
+
+      item.innerHTML = `
+
+        <div class="icon">
+          🎬
+        </div>
+
+        <div class="info">
+
+          <div class="name">
+            ${escapeHtml(video.name)}
+          </div>
+
+          <div class="meta">
+            ${formatBytes(video.size)}
+          </div>
+
+        </div>
+
+        <button class="play">
+          ▶
+        </button>
+
+      `;
+
+
+      item.onclick =
+        function() {
+
+          selectedVideo =
+            video;
+
+          playVideo(
+            video
+          );
+
+        };
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   VIDEO PLAYER
+===================================================== */
+
+function playVideo(
+  video
+) {
+
+  selectedVideo =
+    video;
+
+
+  const player =
+    document.getElementById(
+      'player'
+    );
+
+
+  player.src =
+    video.previewUrl;
+
+
+  player.style.display =
+    'block';
+
+
+  document.getElementById(
+    'title'
+  ).textContent =
+    video.name;
+
+
+  document.querySelector(
+    '.content'
+  ).scrollTop = 0;
+
+}
+
+
+/* =====================================================
+   BACK
+===================================================== */
+
+function goBack() {
+
+  if (
+    !folderHistory.length
+  ) {
+
+    return;
+
+  }
+
+
+  const previous =
+    folderHistory.pop();
+
+
+  loadFolder(
+    previous.id
+  );
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+let searchTimer = null;
+
+
+document.getElementById(
+  'search'
+).addEventListener(
+  'input',
+  function() {
+
+    clearTimeout(
+      searchTimer
+    );
+
+
+    const value =
+      this.value.trim();
+
+
+    if (!value) {
+
+      loadFolder(
+        currentFolderId
+      );
+
+      return;
+
+    }
+
+
+    searchTimer =
+      setTimeout(
+        function() {
+
+          performSearch(
+            value
+          );
+
+        },
+        450
+      );
+
+  }
+);
+
+
+async function performSearch(
+  query
+) {
+
+  showLoading();
+
+
+  try {
+
+    const result =
+      await apiGet(
+        'search',
+        {
+          query:
+            query
+        }
+      );
+
+
+    renderSearchResults(
+      result,
+      query
+    );
+
+  }
+
+  catch (error) {
+
+    showError(error);
+
+  }
+
+}
+
+
+/* =====================================================
+   SEARCH RESULTS
+===================================================== */
+
+function renderSearchResults(
+  result,
+  query
+) {
+
+  const list =
+    document.getElementById(
+      'list'
+    );
+
+
+  list.innerHTML = '';
+
+
+  document.getElementById(
+    'folderName'
+  ).textContent =
+    'Search';
+
+
+  document.getElementById(
+    'back'
+  ).style.display =
+    'none';
+
+
+  if (
+    !result.folders.length &&
+    !result.videos.length
+  ) {
+
+    list.innerHTML =
+      `<div class="empty">
+        No results for
+        "${escapeHtml(query)}"
+       </div>`;
+
+    return;
+
+  }
+
+
+  result.folders.forEach(
+    function(folder) {
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'item';
+
+
+      item.innerHTML = `
+
+        <div class="icon">
+          📁
+        </div>
+
+        <div class="info">
+
+          <div class="name">
+            ${escapeHtml(folder.name)}
+          </div>
+
+          <div class="meta">
+            Folder
+          </div>
+
+        </div>
+
+        <div>›</div>
+
+      `;
+
+
+      item.onclick =
+        function() {
+
+          folderHistory = [];
+
+          loadFolder(
+            folder.id
+          );
+
+        };
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  result.videos.forEach(
+    function(video) {
+
+      const item =
+        document.createElement(
+          'div'
+        );
+
+
+      item.className =
+        'item';
+
+
+      item.innerHTML = `
+
+        <div class="icon">
+          🎬
+        </div>
+
+        <div class="info">
+
+          <div class="name">
+            ${escapeHtml(video.name)}
+          </div>
+
+          <div class="meta">
+            ${formatBytes(video.size)}
+          </div>
+
+        </div>
+
+        <button class="play">
+          ▶
+        </button>
+
+      `;
+
+
+      item.onclick =
+        function() {
+
+          selectedVideo =
+            video;
+
+          playVideo(
+            video
+          );
+
+        };
+
+
+      list.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   DRAWER
+===================================================== */
+
+function openDrawer() {
+
+  document.getElementById(
+    'drawer'
+  ).classList.add(
+    'open'
+  );
+
+
+  document.getElementById(
+    'backdrop'
+  ).classList.add(
+    'open'
+  );
+
+}
+
+
+function closeDrawer() {
+
+  document.getElementById(
+    'drawer'
+  ).classList.remove(
+    'open'
+  );
+
+
+  document.getElementById(
+    'backdrop'
+  ).classList.remove(
+    'open'
+  );
+
+}
+
+
+/* =====================================================
+   MOVE VIEW
+===================================================== */
+
+async function openMoveView() {
+
+  if (!selectedVideo) {
+
+    showToast(
+      'Select a video first.'
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    'moveView'
+  ).classList.add(
+    'show'
+  );
+
+
+  await loadMoveFolders();
+
+}
+
+
+/* =====================================================
+   LOAD ALL FOLDERS FOR MOVE
+===================================================== */
+
+async function loadMoveFolders() {
+
+  const select =
+    document.getElementById(
+      'folderSelect'
+    );
+
+
+  select.innerHTML =
+    '<option>Loading folders...</option>';
+
+
+  try {
+
+    const result =
+      await apiGet(
+        'folders'
+      );
+
+
+    select.innerHTML = '';
+
+
+    result.folders.forEach(
+      function(folder) {
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+
+        option.value =
+          folder.id;
+
+
+        option.textContent =
+          folder.name;
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    if (
+      !result.folders.length
+    ) {
+
+      select.innerHTML =
+        '<option>No folders found</option>';
+
+    }
+
+
+  }
+
+  catch (error) {
+
+    select.innerHTML =
+      '<option>Error loading folders</option>';
+
+    showToast(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   MOVE FILE
+===================================================== */
+
+async function moveSelected() {
+
+  if (!selectedVideo) {
+
+    showToast(
+      'Select a video first.'
+    );
+
+    return;
+
+  }
+
+
+  const destination =
+    document.getElementById(
+      'folderSelect'
+    ).value;
+
+
+  if (!destination) {
+
+    showToast(
+      'Select a destination folder.'
+    );
+
+    return;
+
+  }
+
+
+  showToast(
+    'Moving video...'
+  );
+
+
+  try {
+
+    await postAPI({
+
+      action:
+        'move',
+
+      key:
+        API_KEY,
+
+      fileId:
+        selectedVideo.id,
+
+      destinationFolderId:
+        destination
+
+    });
+
+
+    showToast(
+      'Video moved successfully.'
+    );
+
+
+    selectedVideo =
+      null;
+
+
+    document.getElementById(
+      'moveView'
+    ).classList.remove(
+      'show'
+    );
+
+
+    await loadFolder(
+      currentFolderId
+    );
+
+
+  }
+
+  catch (error) {
+
+    showToast(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   POST API
+===================================================== */
+
+function postAPI(
+  data
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      /*
+       * A normal fetch POST from file:// to Apps
+       * Script is subject to browser CORS.
+       *
+       * We therefore submit a temporary HTML form
+       * through an invisible iframe.
+       *
+       * The operation itself executes server-side.
+       */
+
+      const iframe =
+        document.createElement(
+          'iframe'
+        );
+
+
+      iframe.name =
+        'api_' +
+        Date.now();
+
+
+      iframe.style.display =
+        'none';
+
+
+      document.body.appendChild(
+        iframe
+      );
+
+
+      const form =
+        document.createElement(
+          'form'
+        );
+
+
+      form.method =
+        'POST';
+
+
+      form.action =
+        API_URL;
+
+
+      form.target =
+        iframe.name;
+
+
+      Object.keys(data)
+        .forEach(
+          function(key) {
+
+            const input =
+              document.createElement(
+                'input'
+              );
+
+
+            input.type =
+              'hidden';
+
+
+            input.name =
+              key;
+
+
+            input.value =
+              data[key];
+
+
+            form.appendChild(
+              input
+            );
+
+          }
+        );
+
+
+      document.body.appendChild(
+        form
+      );
+
+
+      form.submit();
+
+
+      /*
+       * Google Apps Script doesn't provide
+       * a convenient cross-origin response to
+       * the local file.
+       *
+       * We therefore treat successful submission
+       * as completion and refresh the Drive view.
+       */
+
+      setTimeout(
+        function() {
+
+          form.remove();
+
+          iframe.remove();
+
+          resolve({
+            success: true
+          });
+
+        },
+        1800
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CREATE FOLDER
+===================================================== */
+
+async function createFolderUI() {
+
+  const name =
+    prompt(
+      'New folder name:'
+    );
+
+
+  if (!name) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await postAPI({
+
+      action:
+        'createFolder',
+
+      key:
+        API_KEY,
+
+      parentId:
+        currentFolderId,
+
+      name:
+        name
+
+    });
+
+
+    showToast(
+      'Folder created.'
+    );
+
+
+    await loadFolder(
+      currentFolderId
+    );
+
+  }
+
+  catch (error) {
+
+    showToast(
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   REFRESH
+===================================================== */
+
+function refresh() {
+
+  loadFolder(
+    currentFolderId
+  );
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+function showLoading() {
+
+  document.getElementById(
+    'list'
+  ).innerHTML =
+    '<div class="loading">' +
+    'Loading...' +
+    '</div>';
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(
+  error
+) {
+
+  console.error(
+    error
+  );
+
+
+  document.getElementById(
+    'list'
+  ).innerHTML =
+
+    `<div class="empty">
+
+      Unable to load Drive.
+
+      <br><br>
+
+      ${escapeHtml(
+        error.message ||
+        String(error)
+      )}
+
+    </div>`;
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(
+  message
+) {
+
+  const toast =
+    document.getElementById(
+      'toast'
+    );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.classList.add(
+    'show'
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      function() {
+
+        toast.classList.remove(
+          'show'
+        );
+
+      },
+      2500
+    );
+
+}
+
+
+/* =====================================================
+   FILE SIZE
+===================================================== */
+
+function formatBytes(
+  bytes
+) {
+
+  if (!bytes)
+    return '';
+
+
+  const units =
+    [
+      'B',
+      'KB',
+      'MB',
+      'GB',
+      'TB'
+    ];
+
+
+  let i = 0;
+
+  let size = bytes;
+
+
+  while (
+    size >= 1024 &&
+    i < units.length - 1
+  ) {
+
+    size /= 1024;
+
+    i++;
+
+  }
+
+
+  return (
+    size.toFixed(
+      i === 0
+        ? 0
+        : 1
+    ) +
+    ' ' +
+    units[i]
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+  text
+) {
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+</script>
+
+</body>
+
+</html>
