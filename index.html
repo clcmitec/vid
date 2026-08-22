@@ -1,45 +1,40 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="
-    width=device-width,
-    initial-scale=1,
-    maximum-scale=1,
-    user-scalable=no,
-    viewport-fit=cover
-  ">
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>My Drive Videos</title>
 
-<!-- Inter Font for Threads Aesthetic -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 <style>
-
 /* =====================================================
-   RESET & THREADS LIGHT STYLES
+   RESET & MALAYSIA AIRLINES THEME
 ===================================================== */
 
 :root {
-  --bg-color: #ffffff;
-  --card-bg: #f9f9f9;
-  --card-border: #e5e5e5;
-  --card-hover: #f0f0f0;
-  --text-primary: #000000;
-  --text-secondary: #777777;
-  --accent-black: #000000;
+  /* Malaysia Airlines Theme Tokens */
+  --mh-navy: #14467b;
+  --mh-navy-dark: #0e335b;
+  --mh-red: #d8232a;
+  --mh-gold: #d4af37;
+  --mh-sand: #f4f6f9;
+
+  --bg-color: var(--mh-sand);
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --card-hover: #eef6ff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --accent-black: var(--mh-navy);
   --accent-white: #ffffff;
-  --input-bg: #f4f4f4;
-  --input-border: #e0e0e0;
+  --input-bg: #ffffff;
+  --input-border: #e5e7eb;
+
+  --pill-blue-bg: #eef6ff;
+  --pill-blue-border: #bfdbfe;
+
+  --font-main: 'Trebuchet MS', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
@@ -56,7 +51,7 @@ body {
   overflow: hidden;
   background: var(--bg-color);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-main);
 }
 
 
@@ -78,24 +73,33 @@ body {
 ===================================================== */
 
 .header {
-  height: 60px;
+  height: 64px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: env(safe-area-inset-top) 16px 0 16px;
-  background: #131f13;
-  border-bottom: 1px solid var(--card-border);
+  background: var(--mh-navy);
+  border-bottom: 3px solid var(--mh-red);
+  box-shadow: 0 4px 12px rgba(14, 51, 91, 0.15);
+  z-index: 100;
+}
+
+.brand-img {
+  height: 24px;
+  width: auto;
+  filter: brightness(0) invert(1);
 }
 
 .header-title {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
 }
 
 
@@ -130,26 +134,28 @@ body {
 
 .search {
   width: 100%;
-  height: 44px;
-  border-radius: 16px;
+  height: 46px;
+  border-radius: 8px;
   border: 1px solid var(--input-border);
   background: var(--input-bg);
   color: var(--text-primary);
   outline: none;
   padding: 0 16px;
   font-size: 14px;
-  font-family: inherit;
+  font-family: var(--font-main);
+  font-weight: 600;
   margin-bottom: 16px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .search::placeholder {
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .search:focus {
-  border-color: #000000;
-  background: #ffffff;
+  border-color: var(--mh-navy);
+  box-shadow: 0 0 0 3px rgba(20, 70, 123, 0.1);
 }
 
 
@@ -165,29 +171,34 @@ body {
 }
 
 .back {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border: 1px solid var(--card-border);
   border-radius: 50%;
   background: var(--card-bg);
-  color: var(--text-primary);
+  color: var(--mh-navy);
   font-size: 18px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .back:active {
-  background: var(--card-hover);
+  background: var(--mh-navy);
+  color: #ffffff;
 }
 
 .folder-name {
   flex: 1;
   min-width: 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--mh-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -195,7 +206,7 @@ body {
 
 
 /* =====================================================
-   THREADS LIGHT ITEM CARDS
+   ITEM CARDS
 ===================================================== */
 
 .item {
@@ -208,13 +219,14 @@ body {
   padding: 12px 14px;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   transition: background 0.15s ease, transform 0.1s ease;
   cursor: pointer;
 }
 
 .item:active {
-  transform: scale(0.99);
+  transform: scale(0.98);
   background: var(--card-hover);
 }
 
@@ -222,13 +234,14 @@ body {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  background: #ffffff;
-  border: 1px solid var(--card-border);
+  font-size: 20px;
+  background: var(--pill-blue-bg);
+  color: var(--mh-navy);
+  border: 1px solid var(--pill-blue-border);
 }
 
 .icon-img {
@@ -243,11 +256,10 @@ body {
 }
 
 .name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mh-navy);
   line-height: 1.35;
-  letter-spacing: -0.1px;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -257,7 +269,8 @@ body {
 .meta {
   margin-top: 3px;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .play {
@@ -265,10 +278,10 @@ body {
   height: 36px;
   flex-shrink: 0;
   border: 0;
-  border-radius: 50%;
-  background: var(--accent-black);
+  border-radius: 8px;
+  background: var(--mh-navy);
   color: var(--accent-white);
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,12 +298,13 @@ body {
   padding: 60px 20px;
   text-align: center;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 
 /* =====================================================
-   BOTTOM CORNER BUTTON (THREADS LIGHT FAB)
+   FAB BUTTON
 ===================================================== */
 
 .corner-zone {
@@ -303,22 +317,22 @@ body {
 .corner-button {
   width: 52px;
   height: 52px;
-  border-radius: 18px;
-  border: 1px solid var(--card-border);
-  background: #ffffff;
-  color: var(--text-primary);
+  border-radius: 50%;
+  border: 1px solid var(--mh-navy);
+  background: var(--mh-navy);
+  color: #ffffff;
   font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(20, 70, 123, 0.3);
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .corner-button:active {
-  transform: scale(0.94);
-  background: var(--card-hover);
+  transform: scale(0.92);
+  background: var(--mh-navy-dark);
 }
 
 
@@ -330,8 +344,8 @@ body {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(14, 51, 91, 0.4);
+  backdrop-filter: blur(2px);
   display: none;
 }
 
@@ -349,10 +363,11 @@ body {
   overflow-y: auto;
   padding: 12px 16px calc(24px + env(safe-area-inset-bottom));
   background: #ffffff;
-  border-radius: 24px 24px 0 0;
-  border-top: 1px solid var(--card-border);
+  border-radius: 16px 16px 0 0;
+  border-top: 4px solid var(--mh-navy);
   transform: translateY(100%);
   transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .drawer.open {
@@ -363,39 +378,43 @@ body {
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  background: #dddddd;
+  background: #cbd5e1;
   margin: 0 auto 18px;
 }
 
 .drawer-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--mh-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 16px;
   text-align: center;
 }
 
 .drawer-button {
   width: 100%;
-  height: 50px;
+  height: 48px;
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: 8px;
   background: var(--card-bg);
-  color: var(--text-primary);
+  color: var(--mh-navy);
   text-align: left;
   padding: 0 16px;
   margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   font-family: inherit;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .drawer-button:active {
-  background: var(--card-hover);
+  background: var(--mh-navy);
+  color: #ffffff;
 }
 
 
@@ -414,30 +433,33 @@ body {
 
 .label {
   display: block;
-  color: var(--text-secondary);
-  font-size: 12px;
+  color: var(--mh-navy);
+  font-size: 11px;
   margin: 12px 0 6px;
-  font-weight: 500;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .select,
 .text-input {
   width: 100%;
   height: 46px;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid var(--input-border);
   background: var(--input-bg);
   color: var(--text-primary);
   padding: 0 12px;
   font-size: 14px;
   font-family: inherit;
+  font-weight: 600;
   outline: none;
 }
 
 .select:focus,
 .text-input:focus {
-  border-color: #000000;
-  background: #ffffff;
+  border-color: var(--mh-navy);
+  box-shadow: 0 0 0 3px rgba(20, 70, 123, 0.1);
 }
 
 .primary {
@@ -445,17 +467,20 @@ body {
   height: 48px;
   margin-top: 16px;
   border: 0;
-  border-radius: 14px;
-  background: var(--accent-black);
+  border-radius: 8px;
+  background: var(--mh-navy);
   color: var(--accent-white);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 .primary:active {
-  opacity: 0.85;
+  background: var(--mh-navy-dark);
 }
 
 
@@ -471,15 +496,16 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: 500;
-  background: var(--accent-black);
+  background: var(--mh-navy);
   color: var(--accent-white);
   padding: 10px 18px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
   transition: all 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(14, 51, 91, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .toast.show {
@@ -488,28 +514,16 @@ body {
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
 <div id="app">
 
-
   <header class="header">
-
-    <div
-      id="title"
-      class="header-title">
-
-      My Drive
-
-    </div>
-
+    <img class="brand-img" src="https://mitec.com.my/static/img/logos/mitec-new-logo.png" alt="MITEC">
+    <div id="title" class="header-title">My Drive</div>
   </header>
-
 
   <iframe
     id="player"
@@ -519,9 +533,7 @@ body {
     allowfullscreen>
   </iframe>
 
-
   <main class="content">
-
 
     <input
       id="search"
@@ -529,41 +541,27 @@ body {
       type="search"
       placeholder="Search videos or folders...">
 
-
     <div class="folder-bar">
-
       <button
         id="back"
         class="back"
         style="display:none"
         onclick="goBack()">
-
         ‹
-
       </button>
-
 
       <div
         id="folderName"
         class="folder-name">
-
         Loading...
-
       </div>
-
     </div>
-
 
     <div id="list">
-
       <div class="loading">
-
         Connecting to Drive...
-
       </div>
-
     </div>
-
 
   </main>
 
@@ -571,19 +569,15 @@ body {
 
 
 <!-- ==================================================
-     BOTTOM CORNER BUTTON
+     FAB BUTTON
 ================================================== -->
 
 <div class="corner-zone">
-
   <button
     class="corner-button"
     onclick="openDrawer()">
-
-    ⋮
-
+    <i class="ph ph-dots-three-vertical"></i>
   </button>
-
 </div>
 
 
@@ -597,7 +591,6 @@ body {
   onclick="closeDrawer()">
 </div>
 
-
 <div
   id="drawer"
   class="drawer">
@@ -605,11 +598,8 @@ body {
   <div class="handle"></div>
 
   <div class="drawer-title">
-
     Drive Management
-
   </div>
-
 
   <button
     class="drawer-button"
@@ -617,85 +607,55 @@ body {
       refresh();
       closeDrawer();
     ">
-
-    🔄 &nbsp; Refresh
-
-
+    <i class="ph ph-arrows-clockwise" style="font-size:18px;"></i> Refresh
   </button>
-
 
   <button
     class="drawer-button"
     onclick="openMoveView()">
-
-    ↔️ &nbsp; Move Video
-
-
+    <i class="ph ph-arrows-out-line-horizontal" style="font-size:18px;"></i> Move Video
   </button>
-
 
   <button
     class="drawer-button"
     onclick="createFolderUI()">
-
-    📁 &nbsp; Create Folder
-
-
+    <i class="ph ph-folder-plus" style="font-size:18px;"></i> Create Folder
   </button>
-
 
   <button
     class="drawer-button"
     onclick="closeDrawer()">
-
-    ✕ &nbsp; Close
-
+    <i class="ph ph-x" style="font-size:18px;"></i> Close
   </button>
 
-
-  <!-- MOVE -->
-
+  <!-- MOVE VIEW -->
   <div
     id="moveView"
     class="move-view">
 
-
     <div class="label">
-
       Selected video
-
     </div>
-
 
     <select
       id="videoSelect"
       class="select">
-
     </select>
 
-
     <div class="label">
-
       Destination folder
-
     </div>
-
 
     <select
       id="folderSelect"
       class="select">
-
     </select>
-
 
     <button
       class="primary"
       onclick="moveSelected()">
-
       Move Video
-
     </button>
-
 
   </div>
 
@@ -714,27 +674,12 @@ body {
 
 <script>
 
-
 /* =====================================================
    CONFIGURATION
 ===================================================== */
 
-/*
- * PUT YOUR APPS SCRIPT WEB APP URL HERE.
- *
- * Example:
- *
- * https://script.google.com/macros/s/
- * ABC123456789/exec
- */
-
 const API_URL =
   "https://script.google.com/macros/s/AKfycbw9RtHkDeLeP7xXBFKpVtEahx_0vbavLchnh7-T69hYmwOC3J7wuoSKCpWfj1VZ9FCwfQ/exec";
-
-
-/*
- * MUST MATCH Code.gs
- */
 
 const API_KEY =
   "zqyH&F5YK";
@@ -748,15 +693,10 @@ const FOLDER_ICON_URL =
 ===================================================== */
 
 let currentFolderId = null;
-
 let currentFolderName = '';
-
 let folderHistory = [];
-
 let currentFolders = [];
-
 let currentVideos = [];
-
 let selectedVideo = null;
 
 
@@ -767,9 +707,7 @@ let selectedVideo = null;
 document.addEventListener(
   'DOMContentLoaded',
   function() {
-
     loadRoot();
-
   }
 );
 
@@ -778,152 +716,51 @@ document.addEventListener(
    JSONP REQUEST
 ===================================================== */
 
-function apiGet(
-  action,
-  params = {}
-) {
+function apiGet(action, params = {}) {
+  return new Promise(function(resolve, reject) {
+    const callbackName = 'jsonp_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const script = document.createElement('script');
+    const query = new URLSearchParams();
 
-  return new Promise(
-    function(resolve, reject) {
+    query.set('action', action);
+    query.set('callback', callbackName);
+    query.set('key', API_KEY);
 
-      const callbackName =
-        'jsonp_' +
-        Date.now() +
-        '_' +
-        Math.floor(
-          Math.random() * 100000
-        );
+    Object.keys(params).forEach(function(key) {
+      query.set(key, params[key]);
+    });
 
+    const timeout = setTimeout(function() {
+      cleanup();
+      reject(new Error('Request timed out.'));
+    }, 15000);
 
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      const query =
-        new URLSearchParams();
-
-
-      query.set(
-        'action',
-        action
-      );
-
-
-      query.set(
-        'callback',
-        callbackName
-      );
-
-
-      query.set(
-        'key',
-        API_KEY
-      );
-
-
-      Object.keys(params)
-        .forEach(function(key) {
-
-          query.set(
-            key,
-            params[key]
-          );
-
-        });
-
-
-      const timeout =
-        setTimeout(
-          function() {
-
-            cleanup();
-
-            reject(
-              new Error(
-                'Request timed out.'
-              )
-            );
-
-          },
-          15000
-        );
-
-
-      window[callbackName] =
-        function(data) {
-
-          clearTimeout(timeout);
-
-          cleanup();
-
-          if (
-            data &&
-            data.success === false
-          ) {
-
-            reject(
-              new Error(
-                data.error ||
-                'Server error.'
-              )
-            );
-
-            return;
-
-          }
-
-          resolve(data);
-
-        };
-
-
-      function cleanup() {
-
-        delete window[
-          callbackName
-        ];
-
-        if (script.parentNode) {
-
-          script.parentNode
-            .removeChild(script);
-
-        }
-
+    window[callbackName] = function(data) {
+      clearTimeout(timeout);
+      cleanup();
+      if (data && data.success === false) {
+        reject(new Error(data.error || 'Server error.'));
+        return;
       }
+      resolve(data);
+    };
 
-
-      script.onerror =
-        function() {
-
-          clearTimeout(timeout);
-
-          cleanup();
-
-          reject(
-            new Error(
-              'Could not connect to Apps Script.'
-            )
-          );
-
-        };
-
-
-      script.src =
-        API_URL +
-        '?' +
-        query.toString();
-
-
-      document.body.appendChild(
-        script
-      );
-
+    function cleanup() {
+      delete window[callbackName];
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     }
-  );
 
+    script.onerror = function() {
+      clearTimeout(timeout);
+      cleanup();
+      reject(new Error('Could not connect to Apps Script.'));
+    };
+
+    script.src = API_URL + '?' + query.toString();
+    document.body.appendChild(script);
+  });
 }
 
 
@@ -932,36 +769,16 @@ function apiGet(
 ===================================================== */
 
 async function loadRoot() {
-
   showLoading();
-
   try {
-
-    const data =
-      await apiGet('root');
-
-
-    currentFolderId =
-      data.folder.id;
-
-    currentFolderName =
-      data.folder.name;
-
+    const data = await apiGet('root');
+    currentFolderId = data.folder.id;
+    currentFolderName = data.folder.name;
     folderHistory = [];
-
-
-    await loadFolder(
-      currentFolderId
-    );
-
-  }
-
-  catch (error) {
-
+    await loadFolder(currentFolderId);
+  } catch (error) {
     showError(error);
-
   }
-
 }
 
 
@@ -969,49 +786,18 @@ async function loadRoot() {
    LOAD FOLDER
 ===================================================== */
 
-async function loadFolder(
-  folderId
-) {
-
+async function loadFolder(folderId) {
   showLoading();
-
   try {
-
-    const data =
-      await apiGet(
-        'contents',
-        {
-          folderId:
-            folderId
-        }
-      );
-
-
-    currentFolderId =
-      data.folder.id;
-
-    currentFolderName =
-      data.folder.name;
-
-    currentFolders =
-      data.folders || [];
-
-    currentVideos =
-      data.videos || [];
-
-
-    renderFolder(
-      data
-    );
-
-  }
-
-  catch (error) {
-
+    const data = await apiGet('contents', { folderId: folderId });
+    currentFolderId = data.folder.id;
+    currentFolderName = data.folder.name;
+    currentFolders = data.folders || [];
+    currentVideos = data.videos || [];
+    renderFolder(data);
+  } catch (error) {
     showError(error);
-
   }
-
 }
 
 
@@ -1019,187 +805,67 @@ async function loadFolder(
    RENDER FOLDER
 ===================================================== */
 
-function renderFolder(
-  data
-) {
+function renderFolder(data) {
+  document.getElementById('title').textContent = data.folder.name;
+  document.getElementById('folderName').textContent = data.folder.name;
+  document.getElementById('back').style.display = folderHistory.length ? 'block' : 'none';
 
-  document.getElementById(
-    'title'
-  ).textContent =
-    data.folder.name;
-
-
-  document.getElementById(
-    'folderName'
-  ).textContent =
-    data.folder.name;
-
-
-  document.getElementById(
-    'back'
-  ).style.display =
-    folderHistory.length
-      ? 'block'
-      : 'none';
-
-
-  const list =
-    document.getElementById(
-      'list'
-    );
-
-
+  const list = document.getElementById('list');
   list.innerHTML = '';
 
-
-  if (
-    !data.folders.length &&
-    !data.videos.length
-  ) {
-
-    list.innerHTML =
-      '<div class="empty">' +
-      'This folder is empty.' +
-      '</div>';
-
+  if (!data.folders.length && !data.videos.length) {
+    list.innerHTML = '<div class="empty">This folder is empty.</div>';
     return;
-
   }
 
+  /* --------------------------------- FOLDERS --------------------------------- */
+  data.folders.forEach(function(folder) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="icon">
+        <i class="ph ph-folder-simple"></i>
+      </div>
+      <div class="info">
+        <div class="name">${escapeHtml(folder.name)}</div>
+        <div class="meta">Folder</div>
+      </div>
+      <div style="color:var(--text-secondary); font-weight:bold;">›</div>
+    `;
 
-  /* ---------------------------------
-     FOLDERS
-  --------------------------------- */
+    item.onclick = function() {
+      folderHistory.push({
+        id: currentFolderId,
+        name: currentFolderName
+      });
+      loadFolder(folder.id);
+    };
 
-  data.folders.forEach(
-    function(folder) {
+    list.appendChild(item);
+  });
 
-      const item =
-        document.createElement(
-          'div'
-        );
+  /* --------------------------------- VIDEOS --------------------------------- */
+  data.videos.forEach(function(video) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="icon">
+        <i class="ph ph-video-camera"></i>
+      </div>
+      <div class="info">
+        <div class="name">${escapeHtml(video.name)}</div>
+        <div class="meta">${formatBytes(video.size)}</div>
+      </div>
+      <button class="play">▶</button>
+    `;
 
+    item.onclick = function() {
+      selectedVideo = video;
+      playVideo(video);
+    };
 
-      item.className =
-        'item';
-
-
-      item.innerHTML = `
-
-        <div class="icon">
-          <img class="icon-img" src="${FOLDER_ICON_URL}" alt="Folder">
-        </div>
-
-        <div class="info">
-
-          <div class="name">
-            ${escapeHtml(folder.name)}
-          </div>
-
-          <div class="meta">
-            Folder
-          </div>
-
-        </div>
-
-        <div>
-          ›
-        </div>
-
-      `;
-
-
-      item.onclick =
-        function() {
-
-          folderHistory.push({
-
-            id:
-              currentFolderId,
-
-            name:
-              currentFolderName
-
-          });
-
-
-          loadFolder(
-            folder.id
-          );
-
-        };
-
-
-      list.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  /* ---------------------------------
-     VIDEOS
-  --------------------------------- */
-
-  data.videos.forEach(
-    function(video) {
-
-      const item =
-        document.createElement(
-          'div'
-        );
-
-
-      item.className =
-        'item';
-
-
-      item.innerHTML = `
-
-        <div class="icon">
-          🎬
-        </div>
-
-        <div class="info">
-
-          <div class="name">
-            ${escapeHtml(video.name)}
-          </div>
-
-          <div class="meta">
-            ${formatBytes(video.size)}
-          </div>
-
-        </div>
-
-        <button class="play">
-          ▶
-        </button>
-
-      `;
-
-
-      item.onclick =
-        function() {
-
-          selectedVideo =
-            video;
-
-          playVideo(
-            video
-          );
-
-        };
-
-
-      list.appendChild(
-        item
-      );
-
-    }
-  );
-
+    list.appendChild(item);
+  });
 }
 
 
@@ -1207,38 +873,13 @@ function renderFolder(
    VIDEO PLAYER
 ===================================================== */
 
-function playVideo(
-  video
-) {
-
-  selectedVideo =
-    video;
-
-
-  const player =
-    document.getElementById(
-      'player'
-    );
-
-
-  player.src =
-    video.previewUrl;
-
-
-  player.style.display =
-    'block';
-
-
-  document.getElementById(
-    'title'
-  ).textContent =
-    video.name;
-
-
-  document.querySelector(
-    '.content'
-  ).scrollTop = 0;
-
+function playVideo(video) {
+  selectedVideo = video;
+  const player = document.getElementById('player');
+  player.src = video.previewUrl;
+  player.style.display = 'block';
+  document.getElementById('title').textContent = video.name;
+  document.querySelector('.content').scrollTop = 0;
 }
 
 
@@ -1247,24 +888,9 @@ function playVideo(
 ===================================================== */
 
 function goBack() {
-
-  if (
-    !folderHistory.length
-  ) {
-
-    return;
-
-  }
-
-
-  const previous =
-    folderHistory.pop();
-
-
-  loadFolder(
-    previous.id
-  );
-
+  if (!folderHistory.length) return;
+  const previous = folderHistory.pop();
+  loadFolder(previous.id);
 }
 
 
@@ -1274,81 +900,29 @@ function goBack() {
 
 let searchTimer = null;
 
+document.getElementById('search').addEventListener('input', function() {
+  clearTimeout(searchTimer);
+  const value = this.value.trim();
 
-document.getElementById(
-  'search'
-).addEventListener(
-  'input',
-  function() {
-
-    clearTimeout(
-      searchTimer
-    );
-
-
-    const value =
-      this.value.trim();
-
-
-    if (!value) {
-
-      loadFolder(
-        currentFolderId
-      );
-
-      return;
-
-    }
-
-
-    searchTimer =
-      setTimeout(
-        function() {
-
-          performSearch(
-            value
-          );
-
-        },
-        450
-      );
-
+  if (!value) {
+    loadFolder(currentFolderId);
+    return;
   }
-);
+
+  searchTimer = setTimeout(function() {
+    performSearch(value);
+  }, 450);
+});
 
 
-async function performSearch(
-  query
-) {
-
+async function performSearch(query) {
   showLoading();
-
-
   try {
-
-    const result =
-      await apiGet(
-        'search',
-        {
-          query:
-            query
-        }
-      );
-
-
-    renderSearchResults(
-      result,
-      query
-    );
-
-  }
-
-  catch (error) {
-
+    const result = await apiGet('search', { query: query });
+    renderSearchResults(result, query);
+  } catch (error) {
     showError(error);
-
   }
-
 }
 
 
@@ -1356,162 +930,56 @@ async function performSearch(
    SEARCH RESULTS
 ===================================================== */
 
-function renderSearchResults(
-  result,
-  query
-) {
-
-  const list =
-    document.getElementById(
-      'list'
-    );
-
-
+function renderSearchResults(result, query) {
+  const list = document.getElementById('list');
   list.innerHTML = '';
+  document.getElementById('folderName').textContent = 'Search';
+  document.getElementById('back').style.display = 'none';
 
-
-  document.getElementById(
-    'folderName'
-  ).textContent =
-    'Search';
-
-
-  document.getElementById(
-    'back'
-  ).style.display =
-    'none';
-
-
-  if (
-    !result.folders.length &&
-    !result.videos.length
-  ) {
-
-    list.innerHTML =
-      `<div class="empty">
-        No results for
-        "${escapeHtml(query)}"
-       </div>`;
-
+  if (!result.folders.length && !result.videos.length) {
+    list.innerHTML = `<div class="empty">No results for "${escapeHtml(query)}"</div>`;
     return;
-
   }
 
+  result.folders.forEach(function(folder) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="icon"><i class="ph ph-folder-simple"></i></div>
+      <div class="info">
+        <div class="name">${escapeHtml(folder.name)}</div>
+        <div class="meta">Folder</div>
+      </div>
+      <div style="color:var(--text-secondary); font-weight:bold;">›</div>
+    `;
 
-  result.folders.forEach(
-    function(folder) {
+    item.onclick = function() {
+      folderHistory = [];
+      loadFolder(folder.id);
+    };
 
-      const item =
-        document.createElement(
-          'div'
-        );
+    list.appendChild(item);
+  });
 
+  result.videos.forEach(function(video) {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div class="icon"><i class="ph ph-video-camera"></i></div>
+      <div class="info">
+        <div class="name">${escapeHtml(video.name)}</div>
+        <div class="meta">${formatBytes(video.size)}</div>
+      </div>
+      <button class="play">▶</button>
+    `;
 
-      item.className =
-        'item';
+    item.onclick = function() {
+      selectedVideo = video;
+      playVideo(video);
+    };
 
-
-      item.innerHTML = `
-
-        <div class="icon">
-          <img class="icon-img" src="${FOLDER_ICON_URL}" alt="Folder">
-        </div>
-
-        <div class="info">
-
-          <div class="name">
-            ${escapeHtml(folder.name)}
-          </div>
-
-          <div class="meta">
-            Folder
-          </div>
-
-        </div>
-
-        <div>›</div>
-
-      `;
-
-
-      item.onclick =
-        function() {
-
-          folderHistory = [];
-
-          loadFolder(
-            folder.id
-          );
-
-        };
-
-
-      list.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  result.videos.forEach(
-    function(video) {
-
-      const item =
-        document.createElement(
-          'div'
-        );
-
-
-      item.className =
-        'item';
-
-
-      item.innerHTML = `
-
-        <div class="icon">
-          🎬
-        </div>
-
-        <div class="info">
-
-          <div class="name">
-            ${escapeHtml(video.name)}
-          </div>
-
-          <div class="meta">
-            ${formatBytes(video.size)}
-          </div>
-
-        </div>
-
-        <button class="play">
-          ▶
-        </button>
-
-      `;
-
-
-      item.onclick =
-        function() {
-
-          selectedVideo =
-            video;
-
-          playVideo(
-            video
-          );
-
-        };
-
-
-      list.appendChild(
-        item
-      );
-
-    }
-  );
-
+    list.appendChild(item);
+  });
 }
 
 
@@ -1520,38 +988,13 @@ function renderSearchResults(
 ===================================================== */
 
 function openDrawer() {
-
-  document.getElementById(
-    'drawer'
-  ).classList.add(
-    'open'
-  );
-
-
-  document.getElementById(
-    'backdrop'
-  ).classList.add(
-    'open'
-  );
-
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('backdrop').classList.add('open');
 }
 
-
 function closeDrawer() {
-
-  document.getElementById(
-    'drawer'
-  ).classList.remove(
-    'open'
-  );
-
-
-  document.getElementById(
-    'backdrop'
-  ).classList.remove(
-    'open'
-  );
-
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('open');
 }
 
 
@@ -1560,27 +1003,12 @@ function closeDrawer() {
 ===================================================== */
 
 async function openMoveView() {
-
   if (!selectedVideo) {
-
-    showToast(
-      'Select a video first.'
-    );
-
+    showToast('Select a video first.');
     return;
-
   }
-
-
-  document.getElementById(
-    'moveView'
-  ).classList.add(
-    'show'
-  );
-
-
+  document.getElementById('moveView').classList.add('show');
   await loadMoveFolders();
-
 }
 
 
@@ -1589,76 +1017,27 @@ async function openMoveView() {
 ===================================================== */
 
 async function loadMoveFolders() {
-
-  const select =
-    document.getElementById(
-      'folderSelect'
-    );
-
-
-  select.innerHTML =
-    '<option>Loading folders...</option>';
-
+  const select = document.getElementById('folderSelect');
+  select.innerHTML = '<option>Loading folders...</option>';
 
   try {
-
-    const result =
-      await apiGet(
-        'folders'
-      );
-
-
+    const result = await apiGet('folders');
     select.innerHTML = '';
 
+    result.folders.forEach(function(folder) {
+      const option = document.createElement('option');
+      option.value = folder.id;
+      option.textContent = folder.name;
+      select.appendChild(option);
+    });
 
-    result.folders.forEach(
-      function(folder) {
-
-        const option =
-          document.createElement(
-            'option'
-          );
-
-
-        option.value =
-          folder.id;
-
-
-        option.textContent =
-          folder.name;
-
-
-        select.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-    if (
-      !result.folders.length
-    ) {
-
-      select.innerHTML =
-        '<option>No folders found</option>';
-
+    if (!result.folders.length) {
+      select.innerHTML = '<option>No folders found</option>';
     }
-
-
+  } catch (error) {
+    select.innerHTML = '<option>Error loading folders</option>';
+    showToast(error.message);
   }
-
-  catch (error) {
-
-    select.innerHTML =
-      '<option>Error loading folders</option>';
-
-    showToast(
-      error.message
-    );
-
-  }
-
 }
 
 
@@ -1667,90 +1046,34 @@ async function loadMoveFolders() {
 ===================================================== */
 
 async function moveSelected() {
-
   if (!selectedVideo) {
-
-    showToast(
-      'Select a video first.'
-    );
-
+    showToast('Select a video first.');
     return;
-
   }
 
-
-  const destination =
-    document.getElementById(
-      'folderSelect'
-    ).value;
-
-
+  const destination = document.getElementById('folderSelect').value;
   if (!destination) {
-
-    showToast(
-      'Select a destination folder.'
-    );
-
+    showToast('Select a destination folder.');
     return;
-
   }
 
-
-  showToast(
-    'Moving video...'
-  );
-
+  showToast('Moving video...');
 
   try {
-
     await postAPI({
-
-      action:
-        'move',
-
-      key:
-        API_KEY,
-
-      fileId:
-        selectedVideo.id,
-
-      destinationFolderId:
-        destination
-
+      action: 'move',
+      key: API_KEY,
+      fileId: selectedVideo.id,
+      destinationFolderId: destination
     });
 
-
-    showToast(
-      'Video moved successfully.'
-    );
-
-
-    selectedVideo =
-      null;
-
-
-    document.getElementById(
-      'moveView'
-    ).classList.remove(
-      'show'
-    );
-
-
-    await loadFolder(
-      currentFolderId
-    );
-
-
+    showToast('Video moved successfully.');
+    selectedVideo = null;
+    document.getElementById('moveView').classList.remove('show');
+    await loadFolder(currentFolderId);
+  } catch (error) {
+    showToast(error.message);
   }
-
-  catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
 }
 
 
@@ -1758,126 +1081,35 @@ async function moveSelected() {
    POST API
 ===================================================== */
 
-function postAPI(
-  data
-) {
+function postAPI(data) {
+  return new Promise(function(resolve, reject) {
+    const iframe = document.createElement('iframe');
+    iframe.name = 'api_' + Date.now();
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
 
-  return new Promise(
-    function(resolve, reject) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = API_URL;
+    form.target = iframe.name;
 
-      /*
-       * A normal fetch POST from file:// to Apps
-       * Script is subject to browser CORS.
-       *
-       * We therefore submit a temporary HTML form
-       * through an invisible iframe.
-       *
-       * The operation itself executes server-side.
-       */
+    Object.keys(data).forEach(function(key) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = data[key];
+      form.appendChild(input);
+    });
 
-      const iframe =
-        document.createElement(
-          'iframe'
-        );
+    document.body.appendChild(form);
+    form.submit();
 
-
-      iframe.name =
-        'api_' +
-        Date.now();
-
-
-      iframe.style.display =
-        'none';
-
-
-      document.body.appendChild(
-        iframe
-      );
-
-
-      const form =
-        document.createElement(
-          'form'
-        );
-
-
-      form.method =
-        'POST';
-
-
-      form.action =
-        API_URL;
-
-
-      form.target =
-        iframe.name;
-
-
-      Object.keys(data)
-        .forEach(
-          function(key) {
-
-            const input =
-              document.createElement(
-                'input'
-              );
-
-
-            input.type =
-              'hidden';
-
-
-            input.name =
-              key;
-
-
-            input.value =
-              data[key];
-
-
-            form.appendChild(
-              input
-            );
-
-          }
-        );
-
-
-      document.body.appendChild(
-        form
-      );
-
-
-      form.submit();
-
-
-      /*
-       * Google Apps Script doesn't provide
-       * a convenient cross-origin response to
-       * the local file.
-       *
-       * We therefore treat successful submission
-       * as completion and refresh the Drive view.
-       */
-
-      setTimeout(
-        function() {
-
-          form.remove();
-
-          iframe.remove();
-
-          resolve({
-            success: true
-          });
-
-        },
-        1800
-      );
-
-    }
-  );
-
+    setTimeout(function() {
+      form.remove();
+      iframe.remove();
+      resolve({ success: true });
+    }, 1800);
+  });
 }
 
 
@@ -1886,58 +1118,22 @@ function postAPI(
 ===================================================== */
 
 async function createFolderUI() {
-
-  const name =
-    prompt(
-      'New folder name:'
-    );
-
-
-  if (!name) {
-
-    return;
-
-  }
-
+  const name = prompt('New folder name:');
+  if (!name) return;
 
   try {
-
     await postAPI({
-
-      action:
-        'createFolder',
-
-      key:
-        API_KEY,
-
-      parentId:
-        currentFolderId,
-
-      name:
-        name
-
+      action: 'createFolder',
+      key: API_KEY,
+      parentId: currentFolderId,
+      name: name
     });
 
-
-    showToast(
-      'Folder created.'
-    );
-
-
-    await loadFolder(
-      currentFolderId
-    );
-
+    showToast('Folder created.');
+    await loadFolder(currentFolderId);
+  } catch (error) {
+    showToast(error.message);
   }
-
-  catch (error) {
-
-    showToast(
-      error.message
-    );
-
-  }
-
 }
 
 
@@ -1946,11 +1142,7 @@ async function createFolderUI() {
 ===================================================== */
 
 function refresh() {
-
-  loadFolder(
-    currentFolderId
-  );
-
+  loadFolder(currentFolderId);
 }
 
 
@@ -1959,14 +1151,7 @@ function refresh() {
 ===================================================== */
 
 function showLoading() {
-
-  document.getElementById(
-    'list'
-  ).innerHTML =
-    '<div class="loading">' +
-    'Loading...' +
-    '</div>';
-
+  document.getElementById('list').innerHTML = '<div class="loading">Loading...</div>';
 }
 
 
@@ -1974,32 +1159,14 @@ function showLoading() {
    ERROR
 ===================================================== */
 
-function showError(
-  error
-) {
-
-  console.error(
-    error
-  );
-
-
-  document.getElementById(
-    'list'
-  ).innerHTML =
-
+function showError(error) {
+  console.error(error);
+  document.getElementById('list').innerHTML =
     `<div class="empty">
-
       Unable to load Drive.
-
       <br><br>
-
-      ${escapeHtml(
-        error.message ||
-        String(error)
-      )}
-
+      ${escapeHtml(error.message || String(error))}
     </div>`;
-
 }
 
 
@@ -2009,43 +1176,15 @@ function showError(
 
 let toastTimer;
 
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
 
-function showToast(
-  message
-) {
-
-  const toast =
-    document.getElementById(
-      'toast'
-    );
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    'show'
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      function() {
-
-        toast.classList.remove(
-          'show'
-        );
-
-      },
-      2500
-    );
-
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() {
+    toast.classList.remove('show');
+  }, 2500);
 }
 
 
@@ -2053,51 +1192,18 @@ function showToast(
    FILE SIZE
 ===================================================== */
 
-function formatBytes(
-  bytes
-) {
-
-  if (!bytes)
-    return '';
-
-
-  const units =
-    [
-      'B',
-      'KB',
-      'MB',
-      'GB',
-      'TB'
-    ];
-
-
+function formatBytes(bytes) {
+  if (!bytes) return '';
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
   let i = 0;
-
   let size = bytes;
 
-
-  while (
-    size >= 1024 &&
-    i < units.length - 1
-  ) {
-
+  while (size >= 1024 && i < units.length - 1) {
     size /= 1024;
-
     i++;
-
   }
 
-
-  return (
-    size.toFixed(
-      i === 0
-        ? 0
-        : 1
-    ) +
-    ' ' +
-    units[i]
-  );
-
+  return size.toFixed(i === 0 ? 0 : 1) + ' ' + units[i];
 }
 
 
@@ -2105,42 +1211,15 @@ function formatBytes(
    ESCAPE HTML
 ===================================================== */
 
-function escapeHtml(
-  text
-) {
-
+function escapeHtml(text) {
   return String(text)
-
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-
-    .replace(
-      /</g,
-      '&lt;'
-    )
-
-    .replace(
-      />/g,
-      '&gt;'
-    )
-
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-
-    .replace(
-      /'/g,
-      '&#039;'
-    );
-
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
-
 </script>
-
 </body>
-
 </html>
