@@ -1,661 +1,1552 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>My Drive Videos</title>
 
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,
+           initial-scale=1,
+           maximum-scale=1,
+           user-scalable=no,
+           viewport-fit=cover"
+>
+
+<title>My Video Manager</title>
+
 
 <style>
-/* =====================================================
-   RESET & MALAYSIA AIRLINES THEME
-===================================================== */
 
-:root {
-  /* Malaysia Airlines Theme Tokens */
-  --mh-navy: #202427;
-  --mh-navy-dark: #0e335b;
-  --mh-red: #d8232a;
-  --mh-gold: #d4af37;
-  --mh-sand: #f4f6f9;
-
-  --bg-color: var(--mh-sand);
-  --card-bg: #ffffff;
-  --card-border: #e5e7eb;
-  --card-hover: #eef6ff;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --accent-black: var(--mh-navy);
-  --accent-white: #ffffff;
-  --input-bg: #ffffff;
-  --input-border: #e5e7eb;
-
-  --pill-blue-bg: #eef6ff;
-  --pill-blue-border: #bfdbfe;
-
-  --font-main: 'Trebuchet MS', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+
+  box-sizing:
+    border-box;
+
+  -webkit-tap-highlight-color:
+    transparent;
+
 }
+
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--bg-color);
-  color: var(--text-primary);
-  font-family: var(--font-main);
+
+  margin:
+    0;
+
+  padding:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  background:
+    #07080b;
+
+  color:
+    #fff;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  overflow:
+    hidden;
+
 }
 
 
-/* =====================================================
-   APP STRUCTURE
-===================================================== */
+button,
+input {
+
+  font:
+    inherit;
+
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
 
 #app {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-color);
+
+  width:
+    100%;
+
+  height:
+    100dvh;
+
+  height:
+    100svh;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  padding-bottom:
+    env(
+      safe-area-inset-bottom
+    );
+
 }
 
 
-/* =====================================================
-   HEADER
-===================================================== */
+/* =========================================================
+   TOP BAR
+========================================================= */
 
-.header {
-  height: 64px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: env(safe-area-inset-top) 16px 0 16px;
-  background: var(--mh-navy);
-  border-bottom: 3px solid var(--mh-red);
-  box-shadow: 0 4px 12px rgba(14, 51, 91, 0.15);
-  z-index: 100;
-}
+.topbar {
 
-.brand-img {
-  height: 28px;
-  width: auto;
-  object-fit: contain;
-  filter: none;
-}
+  height:
+    56px;
 
-.header-title {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
+  min-height:
+    56px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  padding:
+    0 14px;
+
+  background:
+    #101217;
+
+  border-bottom:
+    1px solid #20242c;
+
 }
 
 
-/* =====================================================
+.title {
+
+  font-size:
+    16px;
+
+  font-weight:
+    700;
+
+}
+
+
+.source {
+
+  font-size:
+    11px;
+
+  color:
+    #aeb5c1;
+
+  background:
+    #1b1f27;
+
+  border-radius:
+    20px;
+
+  padding:
+    7px 10px;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+  flex:
+    1;
+
+  min-height:
+    0;
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+}
+
+
+/* =========================================================
    PLAYER
-===================================================== */
+========================================================= */
 
 .player {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border: 0;
-  display: block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  background:
+    #000;
+
 }
 
 
-/* =====================================================
+.video-stage {
+
+  width:
+    100%;
+
+  aspect-ratio:
+    16 / 9;
+
+  max-height:
+    70dvh;
+
+  background:
+    #000;
+
+  display:
+    flex;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+}
+
+
+.video-stage iframe,
+.video-stage video {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  border:
+    0;
+
+  object-fit:
+    contain;
+
+  background:
+    #000;
+
+}
+
+
+.video-stage video {
+
+  -webkit-user-select:
+    none;
+
+  user-select:
+    none;
+
+}
+
+
+.player-placeholder {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  color:
+    #646b78;
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+}
+
+
+.placeholder-icon {
+
+  font-size:
+    44px;
+
+  margin-bottom:
+    12px;
+
+}
+
+
+.now-playing {
+
+  padding:
+    12px 14px;
+
+  background:
+    #101217;
+
+  font-size:
+    13px;
+
+  white-space:
+    nowrap;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+}
+
+
+/* =========================================================
    CONTENT
-===================================================== */
+========================================================= */
 
 .content {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 16px 16px calc(96px + env(safe-area-inset-bottom)) 16px;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  overflow-y:
+    auto;
+
+  padding:
+    10px 11px 100px;
+
+  -webkit-overflow-scrolling:
+    touch;
+
 }
 
 
-/* =====================================================
-   SEARCH BAR
-===================================================== */
+.section-label {
 
-.search {
-  width: 100%;
-  height: 46px;
-  border-radius: 8px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text-primary);
-  outline: none;
-  padding: 0 16px;
-  font-size: 14px;
-  font-family: var(--font-main);
-  font-weight: 600;
-  margin-bottom: 16px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
+  margin:
+    7px 3px 10px;
 
-.search::placeholder {
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+  font-size:
+    11px;
 
-.search:focus {
-  border-color: var(--mh-navy);
-  box-shadow: 0 0 0 3px rgba(20, 70, 123, 0.1);
+  color:
+    #858d9a;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    .07em;
+
 }
 
 
-/* =====================================================
-   FOLDER BAR
-===================================================== */
+/* =========================================================
+   FOLDER
+========================================================= */
 
-.folder-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+.folder {
+
+  width:
+    100%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    11px;
+
+  padding:
+    13px;
+
+  margin-bottom:
+    7px;
+
+  border:
+    1px solid #222630;
+
+  border-radius:
+    11px;
+
+  background:
+    #11141a;
+
 }
 
-.back {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--card-border);
-  border-radius: 50%;
-  background: var(--card-bg);
-  color: var(--mh-navy);
-  font-size: 18px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.15s ease;
+
+.folder-icon {
+
+  font-size:
+    22px;
+
 }
 
-.back:active {
-  background: var(--mh-navy);
-  color: #ffffff;
-}
 
 .folder-name {
-  flex: 1;
-  min-width: 0;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--mh-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  flex:
+    1;
+
+  font-size:
+    14px;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+
 }
 
 
-/* =====================================================
-   ITEM CARDS
-===================================================== */
+/* =========================================================
+   VIDEO CARD
+========================================================= */
 
-.item {
-  min-height: 64px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
-  padding: 12px 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-  transition: background 0.15s ease, transform 0.1s ease;
-  cursor: pointer;
-}
+.video-card {
 
-.item:active {
-  transform: scale(0.98);
-  background: var(--card-hover);
-}
+  margin-bottom:
+    9px;
 
-.icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  background: var(--pill-blue-bg);
-  color: var(--mh-navy);
-  border: 1px solid var(--pill-blue-border);
-}
+  padding:
+    11px;
 
-.icon-img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
+  border:
+    1px solid #232731;
 
-.info {
-  flex: 1;
-  min-width: 0;
-}
+  border-radius:
+    12px;
 
-.name {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--mh-navy);
-  line-height: 1.35;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
+  background:
+    #11141a;
 
-.meta {
-  margin-top: 3px;
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.play {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border: 0;
-  border-radius: 8px;
-  background: var(--mh-navy);
-  color: var(--accent-white);
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
 }
 
 
-/* =====================================================
-   LOADING / EMPTY STATES
-===================================================== */
+.video-card-name {
 
-.loading,
+  font-size:
+    14px;
+
+  line-height:
+    1.35;
+
+  font-weight:
+    600;
+
+  word-break:
+    break-word;
+
+}
+
+
+.video-card-meta {
+
+  margin-top:
+    5px;
+
+  color:
+    #737b89;
+
+  font-size:
+    11px;
+
+}
+
+
+.card-actions {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    7px;
+
+  margin-top:
+    10px;
+
+}
+
+
+.btn {
+
+  min-height:
+    42px;
+
+  border:
+    0;
+
+  border-radius:
+    9px;
+
+  padding:
+    9px 10px;
+
+  color:
+    #fff;
+
+  background:
+    #242933;
+
+  font-size:
+    13px;
+
+}
+
+
+.btn.primary {
+
+  background:
+    #2868d9;
+
+}
+
+
+.btn.danger {
+
+  background:
+    #5b2932;
+
+}
+
+
+/* =========================================================
+   PHOTOS CARD
+========================================================= */
+
+.photo-card {
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid #252a34;
+
+  border-radius:
+    12px;
+
+  background:
+    #11141a;
+
+  margin-bottom:
+    10px;
+
+}
+
+
+.photo-thumb {
+
+  width:
+    100%;
+
+  aspect-ratio:
+    16 / 9;
+
+  background:
+    #050609;
+
+  display:
+    block;
+
+  object-fit:
+    cover;
+
+}
+
+
+.photo-info {
+
+  padding:
+    10px 11px;
+
+}
+
+
+.photo-name {
+
+  font-size:
+    13px;
+
+  font-weight:
+    600;
+
+  word-break:
+    break-word;
+
+}
+
+
+.photo-meta {
+
+  color:
+    #737b89;
+
+  font-size:
+    11px;
+
+  margin-top:
+    4px;
+
+}
+
+
+.photo-play {
+
+  margin-top:
+    9px;
+
+  width:
+    100%;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search {
+
+  display:
+    flex;
+
+  gap:
+    7px;
+
+  margin-bottom:
+    11px;
+
+}
+
+
+.search input {
+
+  flex:
+    1;
+
+  min-width:
+    0;
+
+  border:
+    1px solid #292e39;
+
+  border-radius:
+    9px;
+
+  background:
+    #11141a;
+
+  color:
+    #fff;
+
+  padding:
+    12px;
+
+  outline:
+    none;
+
+}
+
+
+.search button {
+
+  width:
+    47px;
+
+  border:
+    0;
+
+  border-radius:
+    9px;
+
+  background:
+    #2868d9;
+
+  color:
+    #fff;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
 .empty {
-  padding: 60px 20px;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
+
+  height:
+    60%;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  text-align:
+    center;
+
+  color:
+    #666e7c;
+
+  padding:
+    25px;
+
 }
 
 
-/* =====================================================
-   FAB BUTTON
-===================================================== */
+.empty-icon {
 
-.corner-zone {
-  position: fixed;
-  right: 16px;
-  bottom: calc(16px + env(safe-area-inset-bottom));
-  z-index: 90;
-}
+  font-size:
+    40px;
 
-.corner-button {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 1px solid var(--mh-navy);
-  background: var(--mh-navy);
-  color: #ffffff;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 20px rgba(20, 70, 123, 0.3);
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
+  margin-bottom:
+    10px;
 
-.corner-button:active {
-  transform: scale(0.92);
-  background: var(--mh-navy-dark);
 }
 
 
-/* =====================================================
-   DRAWER & BACKDROP
-===================================================== */
+/* =========================================================
+   BOTTOM DRAWER HANDLE
+========================================================= */
+
+.drawer-zone {
+
+  position:
+    fixed;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  width:
+    78px;
+
+  height:
+    78px;
+
+  z-index:
+    100;
+
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    flex-end;
+
+  padding:
+    0 8px 8px 0;
+
+}
+
+
+.drawer-handle {
+
+  width:
+    46px;
+
+  height:
+    46px;
+
+  border:
+    0;
+
+  border-radius:
+    50%;
+
+  background:
+    #2868d9;
+
+  color:
+    #fff;
+
+  font-size:
+    20px;
+
+  box-shadow:
+    0 5px 22px rgba(
+      0,
+      0,
+      0,
+      .5
+    );
+
+}
+
+
+/* =========================================================
+   DRAWER BACKDROP
+========================================================= */
 
 .backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: rgba(14, 51, 91, 0.4);
-  backdrop-filter: blur(2px);
-  display: none;
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    200;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      .63
+    );
+
+  display:
+    none;
+
 }
 
-.backdrop.open {
-  display: block;
+
+.backdrop.show {
+
+  display:
+    block;
+
 }
+
+
+/* =========================================================
+   DRAWER
+========================================================= */
 
 .drawer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 201;
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 12px 16px calc(24px + env(safe-area-inset-bottom));
-  background: #ffffff;
-  border-radius: 16px 16px 0 0;
-  border-top: 4px solid var(--mh-navy);
-  transform: translateY(100%);
-  transition: transform 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
-  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
+
+  position:
+    fixed;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  bottom:
+    0;
+
+  z-index:
+    300;
+
+  max-height:
+    82dvh;
+
+  overflow-y:
+    auto;
+
+  padding:
+    14px 13px
+    calc(
+      20px +
+      env(
+        safe-area-inset-bottom
+      )
+    );
+
+  background:
+    #12151b;
+
+  border-radius:
+    20px 20px 0 0;
+
+  border-top:
+    1px solid #2b303a;
+
+  transform:
+    translateY(
+      105%
+    );
+
+  transition:
+    transform
+    .22s
+    ease;
+
 }
+
 
 .drawer.open {
-  transform: translateY(0);
+
+  transform:
+    translateY(
+      0
+    );
+
 }
 
-.handle {
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: #cbd5e1;
-  margin: 0 auto 18px;
+
+.drawer-grabber {
+
+  width:
+    38px;
+
+  height:
+    4px;
+
+  margin:
+    0 auto 15px;
+
+  border-radius:
+    10px;
+
+  background:
+    #444a56;
+
 }
+
 
 .drawer-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--mh-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 16px;
-  text-align: center;
-}
 
-.drawer-button {
-  width: 100%;
-  height: 48px;
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  background: var(--card-bg);
-  color: var(--mh-navy);
-  text-align: left;
-  padding: 0 16px;
-  margin-bottom: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
+  font-size:
+    17px;
 
-.drawer-button:active {
-  background: var(--mh-navy);
-  color: #ffffff;
+  font-weight:
+    700;
+
+  margin-bottom:
+    13px;
+
 }
 
 
-/* =====================================================
-   MOVE VIEW & INPUTS
-===================================================== */
+.drawer-label {
 
-.move-view {
-  display: none;
-  margin-top: 8px;
-}
+  color:
+    #737b89;
 
-.move-view.show {
-  display: block;
-}
+  font-size:
+    10px;
 
-.label {
-  display: block;
-  color: var(--mh-navy);
-  font-size: 11px;
-  margin: 12px 0 6px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  text-transform:
+    uppercase;
 
-.select,
-.text-input {
-  width: 100%;
-  height: 46px;
-  border-radius: 8px;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text-primary);
-  padding: 0 12px;
-  font-size: 14px;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-}
+  letter-spacing:
+    .08em;
 
-.select:focus,
-.text-input:focus {
-  border-color: var(--mh-navy);
-  box-shadow: 0 0 0 3px rgba(20, 70, 123, 0.1);
-}
+  margin:
+    15px 2px 7px;
 
-.primary {
-  width: 100%;
-  height: 48px;
-  margin-top: 16px;
-  border: 0;
-  border-radius: 8px;
-  background: var(--mh-navy);
-  color: var(--accent-white);
-  font-weight: 700;
-  font-size: 13px;
-  font-family: inherit;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.primary:active {
-  background: var(--mh-navy-dark);
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
+.drawer-item {
 
-.toast {
-  position: fixed;
-  left: 50%;
-  bottom: calc(84px + env(safe-area-inset-bottom));
-  transform: translate(-50%, 20px);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 500;
-  background: var(--mh-navy);
-  color: var(--accent-white);
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: all 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
-  white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(14, 51, 91, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width:
+    100%;
+
+  min-height:
+    45px;
+
+  padding:
+    12px;
+
+  margin-bottom:
+    6px;
+
+  border:
+    0;
+
+  border-radius:
+    9px;
+
+  background:
+    #1b1f27;
+
+  color:
+    #fff;
+
+  text-align:
+    left;
+
+  font-size:
+    13px;
+
 }
 
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
+
+.drawer-item.active {
+
+  background:
+    #2868d9;
+
 }
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    500;
+
+  display:
+    none;
+
+  align-items:
+    flex-end;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      .75
+    );
+
+}
+
+
+.modal.show {
+
+  display:
+    flex;
+
+}
+
+
+.modal-box {
+
+  width:
+    100%;
+
+  max-height:
+    78dvh;
+
+  overflow-y:
+    auto;
+
+  padding:
+    17px 14px
+    calc(
+      18px +
+      env(
+        safe-area-inset-bottom
+      )
+    );
+
+  border-radius:
+    20px 20px 0 0;
+
+  background:
+    #15181f;
+
+}
+
+
+.modal-title {
+
+  font-size:
+    17px;
+
+  font-weight:
+    700;
+
+  margin-bottom:
+    13px;
+
+}
+
+
+.close {
+
+  width:
+    100%;
+
+  margin-top:
+    10px;
+
+  min-height:
+    43px;
+
+  border:
+    0;
+
+  border-radius:
+    9px;
+
+  background:
+    #292e38;
+
+  color:
+    #fff;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+  position:
+    fixed;
+
+  left:
+    10px;
+
+  right:
+    10px;
+
+  bottom:
+    12px;
+
+  z-index:
+    800;
+
+  padding:
+    11px 13px;
+
+  border:
+    1px solid #353b47;
+
+  border-radius:
+    10px;
+
+  background:
+    #20242d;
+
+  color:
+    #fff;
+
+  font-size:
+    12px;
+
+  display:
+    none;
+
+}
+
+
+.status.show {
+
+  display:
+    block;
+
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.spinner {
+
+  width:
+    20px;
+
+  height:
+    20px;
+
+  border:
+    2px solid #555d6a;
+
+  border-top-color:
+    #fff;
+
+  border-radius:
+    50%;
+
+  animation:
+    spin .7s linear infinite;
+
+  margin:
+    0 auto 12px;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform:
+      rotate(
+        360deg
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+:fullscreen {
+
+  background:
+    #000;
+
+}
+
+
+:fullscreen .video-stage {
+
+  width:
+    100vw;
+
+  height:
+    100vh;
+
+  max-height:
+    none;
+
+  aspect-ratio:
+    auto;
+
+}
+
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div id="app">
 
-  <header class="header">
-    <img class="brand-img" src="https://raw.githubusercontent.com/clcmitec/vid/refs/heads/main/1787370231396.jpg" alt="ZETRA SYSTEMS">
-    <div id="title" class="header-title">My Drive</div>
-  </header>
 
-  <iframe
-    id="player"
-    class="player"
-    style="display:none"
-    allow="autoplay; fullscreen"
-    allowfullscreen>
-  </iframe>
+  <!-- =====================================================
+       TOP
+  ====================================================== -->
 
-  <main class="content">
+  <div class="topbar">
 
-    <input
-      id="search"
-      class="search"
-      type="search"
-      placeholder="Search videos or folders...">
+    <div class="title">
+      My Video Manager
+    </div>
 
-    <div class="folder-bar">
-      <button
-        id="back"
-        class="back"
-        style="display:none"
-        onclick="goBack()">
-        ‹
-      </button>
+    <div
+      id="sourceLabel"
+      class="source"
+    >
+      Google Drive
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="main">
+
+
+    <!-- PLAYER -->
+
+    <section
+      id="player"
+      class="player"
+    >
 
       <div
-        id="folderName"
-        class="folder-name">
-        Loading...
-      </div>
-    </div>
+        id="videoStage"
+        class="video-stage"
+      >
 
-    <div id="list">
-      <div class="loading">
-        Connecting to Drive...
+        <div
+          class="player-placeholder"
+          id="placeholder"
+        >
+
+          <div class="placeholder-icon">
+            🎬
+          </div>
+
+          <div>
+            Select a video to start
+          </div>
+
+        </div>
+
       </div>
-    </div>
+
+
+      <div
+        id="nowPlaying"
+        class="now-playing"
+      >
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTENT -->
+
+    <section
+      id="content"
+      class="content"
+      style="display:none"
+    >
+
+    </section>
+
 
   </main>
 
+
 </div>
 
 
-<!-- ==================================================
-     FAB BUTTON
-================================================== -->
 
-<div class="corner-zone">
+<!-- =======================================================
+     DRAWER BUTTON
+======================================================== -->
+
+<div class="drawer-zone">
+
   <button
-    class="corner-button"
-    onclick="openDrawer()">
-    <i class="ph ph-dots-three-vertical"></i>
+    class="drawer-handle"
+    onclick="openDrawer()"
+    aria-label="Open menu"
+  >
+    ☰
   </button>
+
 </div>
 
 
-<!-- ==================================================
-     DRAWER
-================================================== -->
+
+<!-- =======================================================
+     BACKDROP
+======================================================== -->
 
 <div
   id="backdrop"
   class="backdrop"
-  onclick="closeDrawer()">
+  onclick="closeDrawer()"
+>
 </div>
+
+
+
+<!-- =======================================================
+     DRAWER
+======================================================== -->
 
 <div
   id="drawer"
-  class="drawer">
+  class="drawer"
+>
 
-  <div class="handle"></div>
+  <div class="drawer-grabber"></div>
 
   <div class="drawer-title">
-    Drive Management
+    Media Manager
   </div>
 
+
+  <div class="drawer-label">
+    Source
+  </div>
+
+
   <button
-    class="drawer-button"
+    id="driveSource"
+    class="drawer-item active"
     onclick="
-      refresh();
-      closeDrawer();
-    ">
-    <i class="ph ph-arrows-clockwise" style="font-size:18px;"></i> Refresh
+      switchSource('drive')
+    "
+  >
+    ☁️ Google Drive
   </button>
+
 
   <button
-    class="drawer-button"
-    onclick="openMoveView()">
-    <i class="ph ph-arrows-out-line-horizontal" style="font-size:18px;"></i> Move Video
+    id="photosSource"
+    class="drawer-item"
+    onclick="
+      switchSource('photos')
+    "
+  >
+    📸 Google Photos
   </button>
+
+
+  <div class="drawer-label">
+    Google Drive
+  </div>
+
 
   <button
-    class="drawer-button"
-    onclick="createFolderUI()">
-    <i class="ph ph-folder-plus" style="font-size:18px;"></i> Create Folder
+    class="drawer-item"
+    onclick="
+      driveRoot()
+    "
+  >
+    📁 My Drive
   </button>
+
 
   <button
-    class="drawer-button"
-    onclick="closeDrawer()">
-    <i class="ph ph-x" style="font-size:18px;"></i> Close
+    class="drawer-item"
+    onclick="
+      showSearch()
+    "
+  >
+    🔎 Search videos
   </button>
 
-  <!-- MOVE VIEW -->
-  <div
-    id="moveView"
-    class="move-view">
 
-    <div class="label">
-      Selected video
-    </div>
+  <button
+    class="drawer-item"
+    onclick="
+      createFolder()
+    "
+  >
+    ➕ Create folder
+  </button>
 
-    <select
-      id="videoSelect"
-      class="select">
-    </select>
 
-    <div class="label">
-      Destination folder
-    </div>
+  <div class="drawer-label">
+    Google Photos
+  </div>
 
-    <select
-      id="folderSelect"
-      class="select">
-    </select>
+
+  <button
+    class="drawer-item"
+    onclick="
+      startPhotosPicker()
+    "
+  >
+    📸 Select videos
+  </button>
+
+
+  <button
+    class="drawer-item"
+    onclick="
+      showSelectedPhotos()
+    "
+  >
+    🎬 Selected videos
+  </button>
+
+
+  <div class="drawer-label">
+    Player
+  </div>
+
+
+  <button
+    class="drawer-item"
+    onclick="
+      enterFullscreen()
+    "
+  >
+    ⛶ Fullscreen
+  </button>
+
+</div>
+
+
+
+<!-- =======================================================
+     MODAL
+======================================================== -->
+
+<div
+  id="modal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div
+      id="modalTitle"
+      class="modal-title"
+    ></div>
+
+    <div
+      id="modalContent"
+    ></div>
 
     <button
-      class="primary"
-      onclick="moveSelected()">
-      Move Video
+      class="close"
+      onclick="
+        closeModal()
+      "
+    >
+      Cancel
     </button>
 
   </div>
@@ -663,564 +1554,2620 @@ body {
 </div>
 
 
-<!-- ==================================================
-     TOAST
-================================================== -->
+
+<!-- =======================================================
+     STATUS
+======================================================== -->
 
 <div
-  id="toast"
-  class="toast">
-</div>
+  id="status"
+  class="status"
+></div>
+
 
 
 <script>
 
-/* =====================================================
-   CONFIGURATION
-===================================================== */
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbw9RtHkDeLeP7xXBFKpVtEahx_0vbavLchnh7-T69hYmwOC3J7wuoSKCpWfj1VZ9FCwfQ/exec";
+/************************************************************
+ * CONFIG
+ ************************************************************/
+
+
+/*
+ * YOUR APPS SCRIPT WEB APP URL
+ *
+ * Example:
+ *
+ * https://script.google.com/macros/s/XXXXXXXX/exec
+ */
+
+const WEB_APP_URL =
+  'PASTE_YOUR_WEB_APP_URL_HERE';
+
+
+/*
+ * Must match Code.gs.
+ */
 
 const API_KEY =
-  "zqyH&F5YK";
-
-const FOLDER_ICON_URL =
-  "https://cdn-icons-png.flaticon.com/512/10828/10828574.png";
+  'CHANGE_THIS_TO_YOUR_PRIVATE_KEY';
 
 
-/* =====================================================
-   APP STATE
-===================================================== */
 
-let currentFolderId = null;
-let currentFolderName = '';
-let folderHistory = [];
-let currentFolders = [];
-let currentVideos = [];
-let selectedVideo = null;
+/************************************************************
+ * STATE
+ ************************************************************/
+
+let source =
+  localStorage.getItem(
+    'mvm_source'
+  ) ||
+  'drive';
 
 
-/* =====================================================
-   START
-===================================================== */
+let currentFolderId =
+  localStorage.getItem(
+    'mvm_folder'
+  );
 
-document.addEventListener(
-  'DOMContentLoaded',
-  function() {
-    loadRoot();
+
+let currentFolderName =
+  localStorage.getItem(
+    'mvm_folder_name'
+  ) ||
+  'My Drive';
+
+
+let allFolders =
+  [];
+
+
+let photosSessionId =
+  null;
+
+
+let selectedPhotos =
+  [];
+
+
+let pendingMoveFileId =
+  null;
+
+
+let statusTimer =
+  null;
+
+
+
+/************************************************************
+ * INIT
+ ************************************************************/
+
+window.addEventListener(
+  'load',
+  async function() {
+
+    updateSourceUI();
+
+
+    if (
+      source === 'photos'
+    ) {
+
+      showPhotosHome();
+
+    }
+
+    else {
+
+      await driveStart();
+
+    }
+
   }
 );
 
 
-/* =====================================================
-   JSONP REQUEST
-===================================================== */
 
-function apiGet(action, params = {}) {
-  return new Promise(function(resolve, reject) {
-    const callbackName = 'jsonp_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-    const script = document.createElement('script');
-    const query = new URLSearchParams();
+/************************************************************
+ * API URL
+ ************************************************************/
 
-    query.set('action', action);
-    query.set('callback', callbackName);
-    query.set('key', API_KEY);
+function apiUrl(
+  action,
+  params = {}
+) {
 
-    Object.keys(params).forEach(function(key) {
-      query.set(key, params[key]);
-    });
+  const url =
+    new URL(
+      WEB_APP_URL
+    );
 
-    const timeout = setTimeout(function() {
-      cleanup();
-      reject(new Error('Request timed out.'));
-    }, 15000);
 
-    window[callbackName] = function(data) {
-      clearTimeout(timeout);
-      cleanup();
-      if (data && data.success === false) {
-        reject(new Error(data.error || 'Server error.'));
-        return;
+  url.searchParams.set(
+    'action',
+    action
+  );
+
+
+  url.searchParams.set(
+    'key',
+    API_KEY
+  );
+
+
+  Object.keys(params)
+    .forEach(
+      function(k) {
+
+        url.searchParams.set(
+          k,
+          params[k]
+        );
+
       }
-      resolve(data);
-    };
+    );
 
-    function cleanup() {
-      delete window[callbackName];
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+
+  return url.toString();
+
+}
+
+
+
+/************************************************************
+ * JSONP
+ ************************************************************/
+
+function apiGet(
+  action,
+  params = {}
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const callbackName =
+        '__mvm_' +
+        Date.now() +
+        '_' +
+        Math.random()
+          .toString(36)
+          .slice(2);
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      window[callbackName] =
+        function(data) {
+
+          delete window[
+            callbackName
+          ];
+
+          script.remove();
+
+          resolve(
+            data
+          );
+
+        };
+
+
+      params.callback =
+        callbackName;
+
+
+      script.src =
+        apiUrl(
+          action,
+          params
+        );
+
+
+      script.onerror =
+        function() {
+
+          delete window[
+            callbackName
+          ];
+
+          script.remove();
+
+          reject(
+            new Error(
+              'Unable to connect to Apps Script.'
+            )
+          );
+
+        };
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+  );
+
+}
+
+
+
+/************************************************************
+ * POST
+ ************************************************************/
+
+async function apiPost(
+  data
+) {
+
+  const form =
+    document.createElement(
+      'form'
+    );
+
+
+  form.method =
+    'POST';
+
+  form.action =
+    WEB_APP_URL;
+
+  form.target =
+    'mvm_post_frame';
+
+
+  Object.keys(data)
+    .forEach(
+      function(key) {
+
+        const input =
+          document.createElement(
+            'input'
+          );
+
+        input.type =
+          'hidden';
+
+        input.name =
+          key;
+
+        input.value =
+          data[key];
+
+        form.appendChild(
+          input
+        );
+
       }
+    );
+
+
+  let iframe =
+    document.getElementById(
+      'mvm_post_frame'
+    );
+
+
+  if (!iframe) {
+
+    iframe =
+      document.createElement(
+        'iframe'
+      );
+
+    iframe.id =
+      'mvm_post_frame';
+
+    iframe.name =
+      'mvm_post_frame';
+
+    iframe.style.display =
+      'none';
+
+    document.body.appendChild(
+      iframe
+    );
+
+  }
+
+
+  document.body.appendChild(
+    form
+  );
+
+
+  form.submit();
+
+
+  form.remove();
+
+
+  await wait(
+    1200
+  );
+
+
+  return {
+    success: true
+  };
+
+}
+
+
+
+/************************************************************
+ * DRIVE START
+ ************************************************************/
+
+async function driveStart() {
+
+  if (
+    currentFolderId
+  ) {
+
+    loadFolder(
+      currentFolderId
+    );
+
+    return;
+
+  }
+
+
+  await driveRoot();
+
+}
+
+
+
+/************************************************************
+ * DRIVE ROOT
+ ************************************************************/
+
+async function driveRoot() {
+
+  source =
+    'drive';
+
+
+  saveState();
+
+
+  closeDrawer();
+
+
+  showStatus(
+    'Opening Drive...'
+  );
+
+
+  try {
+
+    const result =
+      await apiGet(
+        'root'
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
     }
 
-    script.onerror = function() {
-      clearTimeout(timeout);
-      cleanup();
-      reject(new Error('Could not connect to Apps Script.'));
-    };
 
-    script.src = API_URL + '?' + query.toString();
-    document.body.appendChild(script);
-  });
-}
+    currentFolderId =
+      result.folder.id;
 
 
-/* =====================================================
-   ROOT
-===================================================== */
+    currentFolderName =
+      result.folder.name;
 
-async function loadRoot() {
-  showLoading();
-  try {
-    const data = await apiGet('root');
-    currentFolderId = data.folder.id;
-    currentFolderName = data.folder.name;
-    folderHistory = [];
-    await loadFolder(currentFolderId);
-  } catch (error) {
-    showError(error);
+
+    saveState();
+
+
+    await loadFolder(
+      currentFolderId
+    );
+
   }
-}
 
+  catch (error) {
 
-/* =====================================================
-   LOAD FOLDER
-===================================================== */
+    showStatus(
+      error.message
+    );
 
-async function loadFolder(folderId) {
-  showLoading();
-  try {
-    const data = await apiGet('contents', { folderId: folderId });
-    currentFolderId = data.folder.id;
-    currentFolderName = data.folder.name;
-    currentFolders = data.folders || [];
-    currentVideos = data.videos || [];
-    renderFolder(data);
-  } catch (error) {
-    showError(error);
   }
+
 }
 
 
-/* =====================================================
-   RENDER FOLDER
-===================================================== */
 
-function renderFolder(data) {
-  document.getElementById('title').textContent = data.folder.name;
-  document.getElementById('folderName').textContent = data.folder.name;
-  document.getElementById('back').style.display = folderHistory.length ? 'block' : 'none';
+/************************************************************
+ * LOAD FOLDER
+ ************************************************************/
 
-  const list = document.getElementById('list');
-  list.innerHTML = '';
+async function loadFolder(
+  folderId
+) {
 
-  if (!data.folders.length && !data.videos.length) {
-    list.innerHTML = '<div class="empty">This folder is empty.</div>';
+  showContent();
+
+
+  showStatus(
+    'Loading...'
+  );
+
+
+  try {
+
+    const result =
+      await apiGet(
+
+        'contents',
+
+        {
+          folderId:
+            folderId
+        }
+
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    currentFolderId =
+      result.folder.id;
+
+
+    currentFolderName =
+      result.folder.name;
+
+
+    saveState();
+
+
+    renderFolder(
+      result
+    );
+
+
+    hideStatus();
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * RENDER FOLDER
+ ************************************************************/
+
+function renderFolder(
+  data
+) {
+
+  const content =
+    document.getElementById(
+      'content'
+    );
+
+
+  let html =
+    '<div class="section-label">' +
+    escapeHtml(
+      data.folder.name
+    ) +
+    '</div>';
+
+
+  data.folders
+    .forEach(
+      function(folder) {
+
+        html += `
+
+          <div
+            class="folder"
+            onclick="
+              loadFolder(
+                '${escapeJs(folder.id)}'
+              )
+            "
+          >
+
+            <div class="folder-icon">
+              📁
+            </div>
+
+            <div class="folder-name">
+              ${escapeHtml(folder.name)}
+            </div>
+
+            <div>
+              ›
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+  data.videos
+    .forEach(
+      function(video) {
+
+        html +=
+          driveVideoCard(
+            video
+          );
+
+      }
+    );
+
+
+  if (
+    !data.folders.length &&
+    !data.videos.length
+  ) {
+
+    html += `
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          📂
+        </div>
+
+        This folder is empty.
+
+      </div>
+
+    `;
+
+  }
+
+
+  content.innerHTML =
+    html;
+
+}
+
+
+
+/************************************************************
+ * DRIVE VIDEO CARD
+ ************************************************************/
+
+function driveVideoCard(
+  video
+) {
+
+  return `
+
+    <div class="video-card">
+
+      <div class="video-card-name">
+        ${escapeHtml(video.name)}
+      </div>
+
+      <div class="video-card-meta">
+        Google Drive ·
+        ${formatBytes(video.size)}
+      </div>
+
+      <div class="card-actions">
+
+        <button
+          class="btn primary"
+          onclick="
+            playDrive(
+              '${escapeJs(video.id)}',
+              '${escapeJs(video.name)}'
+            )
+          "
+        >
+          ▶ Play
+        </button>
+
+        <button
+          class="btn"
+          onclick="
+            openMove(
+              '${escapeJs(video.id)}'
+            )
+          "
+        >
+          ↔ Move
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/************************************************************
+ * PLAY DRIVE
+ ************************************************************/
+
+function playDrive(
+  id,
+  name
+) {
+
+  const stage =
+    document.getElementById(
+      'videoStage'
+    );
+
+
+  stage.innerHTML = `
+
+    <iframe
+      src="
+        https://drive.google.com/file/${encodeURIComponent(id)}/preview
+      "
+      allow="
+        autoplay;
+        fullscreen;
+        picture-in-picture
+      "
+      allowfullscreen
+      style="
+        width:100%;
+        height:100%;
+        border:0;
+      "
+    ></iframe>
+
+  `;
+
+
+  document.getElementById(
+    'nowPlaying'
+  ).textContent =
+    name;
+
+
+  showPlayer();
+
+
+  source =
+    'drive';
+
+
+  updateSourceUI();
+
+}
+
+
+
+/************************************************************
+ * OPEN MOVE
+ ************************************************************/
+
+async function openMove(
+  fileId
+) {
+
+  pendingMoveFileId =
+    fileId;
+
+
+  showStatus(
+    'Loading folders...'
+  );
+
+
+  try {
+
+    const result =
+      await apiGet(
+        'folders'
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    allFolders =
+      result.folders ||
+      [];
+
+
+    hideStatus();
+
+
+    showModal(
+      'Move Video',
+      folderPicker()
+    );
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * FOLDER PICKER
+ ************************************************************/
+
+function folderPicker() {
+
+  let html =
+    '<div style="color:#737b89;font-size:11px;margin-bottom:9px;">' +
+    'Select destination' +
+    '</div>';
+
+
+  allFolders.forEach(
+    function(folder) {
+
+      html += `
+
+        <button
+          class="drawer-item"
+          onclick="
+            moveVideo(
+              '${escapeJs(folder.id)}'
+            )
+          "
+        >
+
+          📁
+          ${escapeHtml(folder.name)}
+
+        </button>
+
+      `;
+
+    }
+  );
+
+
+  return html;
+
+}
+
+
+
+/************************************************************
+ * MOVE VIDEO
+ ************************************************************/
+
+async function moveVideo(
+  destinationId
+) {
+
+  closeModal();
+
+
+  showStatus(
+    'Moving video...'
+  );
+
+
+  try {
+
+    await apiPost({
+
+      action:
+        'move',
+
+      fileId:
+        pendingMoveFileId,
+
+      destinationFolderId:
+        destinationId,
+
+      key:
+        API_KEY
+
+    });
+
+
+    showStatus(
+      'Video moved.'
+    );
+
+
+    await wait(
+      800
+    );
+
+
+    await loadFolder(
+      currentFolderId
+    );
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * CREATE FOLDER
+ ************************************************************/
+
+async function createFolder() {
+
+  closeDrawer();
+
+
+  const name =
+    prompt(
+      'Folder name:'
+    );
+
+
+  if (!name) {
     return;
   }
 
-  /* --------------------------------- FOLDERS --------------------------------- */
-  data.folders.forEach(function(folder) {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `
-      <div class="icon">
-        <i class="ph ph-folder-simple"></i>
-      </div>
-      <div class="info">
-        <div class="name">${escapeHtml(folder.name)}</div>
-        <div class="meta">Folder</div>
-      </div>
-      <div style="color:var(--text-secondary); font-weight:bold;">›</div>
-    `;
 
-    item.onclick = function() {
-      folderHistory.push({
-        id: currentFolderId,
-        name: currentFolderName
-      });
-      loadFolder(folder.id);
-    };
-
-    list.appendChild(item);
-  });
-
-  /* --------------------------------- VIDEOS --------------------------------- */
-  data.videos.forEach(function(video) {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `
-      <div class="icon">
-        <i class="ph ph-video-camera"></i>
-      </div>
-      <div class="info">
-        <div class="name">${escapeHtml(video.name)}</div>
-        <div class="meta">${formatBytes(video.size)}</div>
-      </div>
-      <button class="play">▶</button>
-    `;
-
-    item.onclick = function() {
-      selectedVideo = video;
-      playVideo(video);
-    };
-
-    list.appendChild(item);
-  });
-}
-
-
-/* =====================================================
-   VIDEO PLAYER
-===================================================== */
-
-function playVideo(video) {
-  selectedVideo = video;
-  const player = document.getElementById('player');
-  player.src = video.previewUrl;
-  player.style.display = 'block';
-  document.getElementById('title').textContent = video.name;
-  document.querySelector('.content').scrollTop = 0;
-}
-
-
-/* =====================================================
-   BACK
-===================================================== */
-
-function goBack() {
-  if (!folderHistory.length) return;
-  const previous = folderHistory.pop();
-  loadFolder(previous.id);
-}
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-let searchTimer = null;
-
-document.getElementById('search').addEventListener('input', function() {
-  clearTimeout(searchTimer);
-  const value = this.value.trim();
-
-  if (!value) {
-    loadFolder(currentFolderId);
-    return;
-  }
-
-  searchTimer = setTimeout(function() {
-    performSearch(value);
-  }, 450);
-});
-
-
-async function performSearch(query) {
-  showLoading();
   try {
-    const result = await apiGet('search', { query: query });
-    renderSearchResults(result, query);
-  } catch (error) {
-    showError(error);
+
+    await apiPost({
+
+      action:
+        'createFolder',
+
+      parentId:
+        currentFolderId,
+
+      name:
+        name,
+
+      key:
+        API_KEY
+
+    });
+
+
+    showStatus(
+      'Folder created.'
+    );
+
+
+    await wait(
+      700
+    );
+
+
+    loadFolder(
+      currentFolderId
+    );
+
   }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
 }
 
 
-/* =====================================================
-   SEARCH RESULTS
-===================================================== */
 
-function renderSearchResults(result, query) {
-  const list = document.getElementById('list');
-  list.innerHTML = '';
-  document.getElementById('folderName').textContent = 'Search';
-  document.getElementById('back').style.display = 'none';
+/************************************************************
+ * SEARCH
+ ************************************************************/
 
-  if (!result.folders.length && !result.videos.length) {
-    list.innerHTML = `<div class="empty">No results for "${escapeHtml(query)}"</div>`;
+function showSearch() {
+
+  closeDrawer();
+
+
+  showContent();
+
+
+  document.getElementById(
+    'content'
+  ).innerHTML = `
+
+    <div class="section-label">
+      Search Google Drive
+    </div>
+
+    <div class="search">
+
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search videos or folders"
+        enterkeyhint="search"
+        onkeydown="
+          if(event.key === 'Enter')
+            searchDrive();
+        "
+      >
+
+      <button
+        onclick="
+          searchDrive()
+        "
+      >
+        🔎
+      </button>
+
+    </div>
+
+    <div id="searchResults"></div>
+
+  `;
+
+
+  setTimeout(
+    function() {
+
+      document
+        .getElementById(
+          'searchInput'
+        )
+        .focus();
+
+    },
+
+    100
+
+  );
+
+}
+
+
+
+/************************************************************
+ * SEARCH DRIVE
+ ************************************************************/
+
+async function searchDrive() {
+
+  const input =
+    document.getElementById(
+      'searchInput'
+    );
+
+
+  const query =
+    input.value.trim();
+
+
+  if (!query) {
     return;
   }
 
-  result.folders.forEach(function(folder) {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `
-      <div class="icon"><i class="ph ph-folder-simple"></i></div>
-      <div class="info">
-        <div class="name">${escapeHtml(folder.name)}</div>
-        <div class="meta">Folder</div>
-      </div>
-      <div style="color:var(--text-secondary); font-weight:bold;">›</div>
-    `;
 
-    item.onclick = function() {
-      folderHistory = [];
-      loadFolder(folder.id);
-    };
+  showStatus(
+    'Searching...'
+  );
 
-    list.appendChild(item);
-  });
 
-  result.videos.forEach(function(video) {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.innerHTML = `
-      <div class="icon"><i class="ph ph-video-camera"></i></div>
-      <div class="info">
-        <div class="name">${escapeHtml(video.name)}</div>
-        <div class="meta">${formatBytes(video.size)}</div>
-      </div>
-      <button class="play">▶</button>
-    `;
+  try {
 
-    item.onclick = function() {
-      selectedVideo = video;
-      playVideo(video);
-    };
+    const result =
+      await apiGet(
 
-    list.appendChild(item);
-  });
+        'search',
+
+        {
+          query:
+            query
+        }
+
+      );
+
+
+    let html =
+      '';
+
+
+    result.folders
+      .forEach(
+        function(folder) {
+
+          html += `
+
+            <div
+              class="folder"
+              onclick="
+                loadFolder(
+                  '${escapeJs(folder.id)}'
+                )
+              "
+            >
+
+              <div class="folder-icon">
+                📁
+              </div>
+
+              <div class="folder-name">
+                ${escapeHtml(folder.name)}
+              </div>
+
+              <div>
+                ›
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+
+    result.videos
+      .forEach(
+        function(video) {
+
+          html +=
+            driveVideoCard(
+              video
+            );
+
+        }
+      );
+
+
+    if (!html) {
+
+      html = `
+
+        <div class="empty">
+
+          <div class="empty-icon">
+            🔎
+          </div>
+
+          Nothing found.
+
+        </div>
+
+      `;
+
+    }
+
+
+    document.getElementById(
+      'searchResults'
+    ).innerHTML =
+      html;
+
+
+    hideStatus();
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
 }
 
 
-/* =====================================================
-   DRAWER
-===================================================== */
+
+/************************************************************
+ * SWITCH SOURCE
+ ************************************************************/
+
+function switchSource(
+  selected
+) {
+
+  source =
+    selected;
+
+
+  saveState();
+
+
+  updateSourceUI();
+
+
+  closeDrawer();
+
+
+  if (
+    selected === 'photos'
+  ) {
+
+    showPhotosHome();
+
+  }
+
+  else {
+
+    driveStart();
+
+  }
+
+}
+
+
+
+/************************************************************
+ * PHOTOS HOME
+ ************************************************************/
+
+function showPhotosHome() {
+
+  showContent();
+
+
+  document.getElementById(
+    'content'
+  ).innerHTML = `
+
+    <div class="section-label">
+      Google Photos
+    </div>
+
+    <div class="video-card">
+
+      <div class="video-card-name">
+        Select videos from Google Photos
+      </div>
+
+      <div class="video-card-meta">
+
+        Google Photos controls the
+        selection screen. Your app only
+        receives the media you select.
+
+      </div>
+
+      <div class="card-actions">
+
+        <button
+          class="btn primary"
+          onclick="
+            startPhotosPicker()
+          "
+        >
+          📸 Select
+        </button>
+
+        <button
+          class="btn"
+          onclick="
+            showSelectedPhotos()
+          "
+        >
+          🎬 Selected
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/************************************************************
+ * START PHOTOS PICKER
+ ************************************************************/
+
+async function startPhotosPicker() {
+
+  closeDrawer();
+
+
+  showStatus(
+    'Preparing Google Photos...'
+  );
+
+
+  try {
+
+    const result =
+      await apiGet(
+        'photosCreateSession'
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    photosSessionId =
+      result.sessionId;
+
+
+    /*
+     * Store session so Android returning
+     * to this page doesn't lose it.
+     */
+
+    sessionStorage.setItem(
+      'mvm_photos_session',
+      photosSessionId
+    );
+
+
+    /*
+     * Google requires the picker URI
+     * to be opened outside an embedded
+     * webview/iframe.
+     */
+
+    window.location.href =
+      result.pickerUri;
+
+
+    /*
+     * Polling continues when page remains
+     * alive. Android may suspend this page,
+     * so resume logic below also checks
+     * sessionStorage.
+     */
+
+    pollPhotos();
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * RESUME PHOTOS SESSION
+ ************************************************************/
+
+window.addEventListener(
+  'pageshow',
+  function() {
+
+    const saved =
+      sessionStorage.getItem(
+        'mvm_photos_session'
+      );
+
+
+    if (
+      saved
+    ) {
+
+      photosSessionId =
+        saved;
+
+
+      pollPhotos();
+
+    }
+
+  }
+);
+
+
+
+document.addEventListener(
+  'visibilitychange',
+  function() {
+
+    if (
+      document.visibilityState ===
+      'visible'
+    ) {
+
+      const saved =
+        sessionStorage.getItem(
+          'mvm_photos_session'
+        );
+
+
+      if (
+        saved
+      ) {
+
+        photosSessionId =
+          saved;
+
+        pollPhotos();
+
+      }
+
+    }
+
+  }
+);
+
+
+
+/************************************************************
+ * POLL PHOTOS
+ ************************************************************/
+
+let pollingActive =
+  false;
+
+
+async function pollPhotos() {
+
+  if (
+    !photosSessionId
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    pollingActive
+  ) {
+
+    return;
+
+  }
+
+
+  pollingActive =
+    true;
+
+
+  try {
+
+    const result =
+      await apiGet(
+
+        'photosGetSession',
+
+        {
+          sessionId:
+            photosSessionId
+        }
+
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    const session =
+      result.session;
+
+
+    if (
+      session.mediaItemsSet
+    ) {
+
+      await retrievePhotos();
+
+      return;
+
+    }
+
+
+    pollingActive =
+      false;
+
+
+    const seconds =
+      parseSeconds(
+        session
+          .pollingConfig
+          ?.pollInterval
+      ) ||
+      2;
+
+
+    setTimeout(
+
+      function() {
+
+        pollingActive =
+          false;
+
+        pollPhotos();
+
+      },
+
+      seconds * 1000
+
+    );
+
+  }
+
+  catch (error) {
+
+    pollingActive =
+      false;
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * RETRIEVE PHOTOS
+ ************************************************************/
+
+async function retrievePhotos() {
+
+  showStatus(
+    'Loading selected videos...'
+  );
+
+
+  try {
+
+    const result =
+      await apiGet(
+
+        'photosListMedia',
+
+        {
+          sessionId:
+            photosSessionId
+        }
+
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      throw new Error(
+        result.error
+      );
+
+    }
+
+
+    selectedPhotos =
+      result.videos ||
+      [];
+
+
+    /*
+     * Store only metadata.
+     *
+     * Do NOT permanently store baseUrl.
+     * Google says media URLs expire.
+     */
+
+    saveSelectedPhotoMetadata();
+
+
+    sessionStorage.removeItem(
+      'mvm_photos_session'
+    );
+
+
+    const oldSession =
+      photosSessionId;
+
+
+    photosSessionId =
+      null;
+
+
+    /*
+     * Clean up picker session.
+     */
+
+    apiGet(
+
+      'photosDeleteSession',
+
+      {
+        sessionId:
+          oldSession
+      }
+
+    )
+    .catch(
+      function() {}
+    );
+
+
+    renderSelectedPhotos();
+
+
+    hideStatus();
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * SAVE PHOTO METADATA
+ ************************************************************/
+
+function saveSelectedPhotoMetadata() {
+
+  const metadata =
+    selectedPhotos.map(
+      function(item) {
+
+        return {
+
+          id:
+            item.id,
+
+          filename:
+            item.filename ||
+            'Google Photos video',
+
+          mimeType:
+            item.mediaFile
+              ?.mimeType ||
+            '',
+
+          width:
+            item.mediaMetadata
+              ?.width ||
+            0,
+
+          height:
+            item.mediaMetadata
+              ?.height ||
+            0,
+
+          creationTime:
+            item.mediaMetadata
+              ?.creationTime ||
+            ''
+
+        };
+
+      }
+    );
+
+
+  localStorage.setItem(
+
+    'mvm_photos_metadata',
+
+    JSON.stringify(
+      metadata
+    )
+
+  );
+
+}
+
+
+
+/************************************************************
+ * RENDER PHOTOS
+ ************************************************************/
+
+function showSelectedPhotos() {
+
+  closeDrawer();
+
+  showContent();
+
+
+  renderSelectedPhotos();
+
+}
+
+
+
+function renderSelectedPhotos() {
+
+  const content =
+    document.getElementById(
+      'content'
+    );
+
+
+  if (
+    !selectedPhotos.length
+  ) {
+
+    const stored =
+      localStorage.getItem(
+        'mvm_photos_metadata'
+      );
+
+
+    if (stored) {
+
+      try {
+
+        /*
+         * Metadata alone cannot play a video,
+         * so inform user that re-selection is
+         * required.
+         */
+
+      }
+
+      catch (
+        ignored
+      ) {}
+
+    }
+
+
+    content.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          📸
+        </div>
+
+        No videos selected.
+
+        <br><br>
+
+        Tap ☰ → Google Photos →
+        Select videos.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html = `
+
+    <div class="section-label">
+      Selected Google Photos Videos
+    </div>
+
+  `;
+
+
+  selectedPhotos.forEach(
+    function(item, index) {
+
+      const media =
+        item.mediaFile ||
+        {};
+
+
+      const metadata =
+        item.mediaMetadata ||
+        {};
+
+
+      const thumb =
+        media.baseUrl
+          ? media.baseUrl +
+            '=w720-h405'
+          : '';
+
+
+      const duration =
+        formatDuration(
+          metadata.durationMillis
+        );
+
+
+      html += `
+
+        <div class="photo-card">
+
+          ${
+            thumb
+
+              ? `
+
+                <img
+                  class="photo-thumb"
+                  src="${escapeAttr(thumb)}"
+                  loading="lazy"
+                  alt=""
+                >
+
+              `
+
+              : `
+
+                <div
+                  class="photo-thumb"
+                  style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:40px;
+                  "
+                >
+                  🎬
+                </div>
+
+              `
+          }
+
+
+          <div class="photo-info">
+
+            <div class="photo-name">
+
+              ${escapeHtml(
+                item.filename ||
+                'Google Photos video'
+              )}
+
+            </div>
+
+
+            <div class="photo-meta">
+
+              Google Photos
+
+              ${
+                duration
+                  ? ' · ' + duration
+                  : ''
+              }
+
+              ${
+                metadata.width &&
+                metadata.height
+
+                  ? ' · ' +
+                    metadata.width +
+                    '×' +
+                    metadata.height
+
+                  : ''
+              }
+
+            </div>
+
+
+            <button
+              class="btn primary photo-play"
+              onclick="
+                playPhoto(
+                  ${index}
+                )
+              "
+            >
+
+              ▶ Play
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  content.innerHTML =
+    html;
+
+}
+
+
+
+/************************************************************
+ * PLAY PHOTOS VIDEO
+ ************************************************************/
+
+function playPhoto(
+  index
+) {
+
+  const item =
+    selectedPhotos[index];
+
+
+  if (!item) {
+
+    return;
+
+  }
+
+
+  const media =
+    item.mediaFile ||
+    {};
+
+
+  const metadata =
+    item.mediaMetadata ||
+    {};
+
+
+  if (
+    !media.baseUrl
+  ) {
+
+    showStatus(
+      'Google Photos did not provide a playable URL.'
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Google Photos requires =dv for video.
+   */
+
+  const videoUrl =
+    media.baseUrl +
+    '=dv';
+
+
+  const stage =
+    document.getElementById(
+      'videoStage'
+    );
+
+
+  stage.innerHTML = `
+
+    <video
+      id="mainVideo"
+      controls
+      playsinline
+      preload="metadata"
+      src="${escapeAttr(videoUrl)}"
+    ></video>
+
+  `;
+
+
+  const video =
+    document.getElementById(
+      'mainVideo'
+    );
+
+
+  /*
+   * Automatically enter fullscreen only
+   * when the user explicitly presses our
+   * fullscreen button. Don't force it.
+   */
+
+  video.addEventListener(
+    'error',
+    function() {
+
+      showStatus(
+        'Google Photos video could not be played. Try selecting it again.'
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    'nowPlaying'
+  ).textContent =
+    item.filename ||
+    'Google Photos video';
+
+
+  source =
+    'photos';
+
+
+  updateSourceUI();
+
+
+  showPlayer();
+
+}
+
+
+
+/************************************************************
+ * PLAYER
+ ************************************************************/
+
+function showPlayer() {
+
+  document.getElementById(
+    'player'
+  ).style.display =
+    'flex';
+
+
+  document.getElementById(
+    'content'
+  ).style.display =
+    'none';
+
+}
+
+
+
+function showContent() {
+
+  document.getElementById(
+    'player'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'content'
+  ).style.display =
+    'block';
+
+}
+
+
+
+/************************************************************
+ * FULLSCREEN
+ ************************************************************/
+
+async function enterFullscreen() {
+
+  closeDrawer();
+
+
+  const video =
+    document.getElementById(
+      'mainVideo'
+    );
+
+
+  const stage =
+    document.getElementById(
+      'videoStage'
+    );
+
+
+  try {
+
+    if (
+      video &&
+      video.requestFullscreen
+    ) {
+
+      await video.requestFullscreen();
+
+      return;
+
+    }
+
+
+    if (
+      stage &&
+      stage.requestFullscreen
+    ) {
+
+      await stage.requestFullscreen();
+
+      return;
+
+    }
+
+
+    showStatus(
+      'Fullscreen is not available in this browser.'
+    );
+
+  }
+
+  catch (error) {
+
+    showStatus(
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/************************************************************
+ * DRAWER
+ ************************************************************/
 
 function openDrawer() {
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('backdrop').classList.add('open');
+
+  document
+    .getElementById(
+      'drawer'
+    )
+    .classList.add(
+      'open'
+    );
+
+
+  document
+    .getElementById(
+      'backdrop'
+    )
+    .classList.add(
+      'show'
+    );
+
 }
+
+
 
 function closeDrawer() {
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('backdrop').classList.remove('open');
+
+  document
+    .getElementById(
+      'drawer'
+    )
+    .classList.remove(
+      'open'
+    );
+
+
+  document
+    .getElementById(
+      'backdrop'
+    )
+    .classList.remove(
+      'show'
+    );
+
 }
 
 
-/* =====================================================
-   MOVE VIEW
-===================================================== */
 
-async function openMoveView() {
-  if (!selectedVideo) {
-    showToast('Select a video first.');
-    return;
+/************************************************************
+ * MODAL
+ ************************************************************/
+
+function showModal(
+  title,
+  html
+) {
+
+  document.getElementById(
+    'modalTitle'
+  ).textContent =
+    title;
+
+
+  document.getElementById(
+    'modalContent'
+  ).innerHTML =
+    html;
+
+
+  document
+    .getElementById(
+      'modal'
+    )
+    .classList.add(
+      'show'
+    );
+
+}
+
+
+
+function closeModal() {
+
+  document
+    .getElementById(
+      'modal'
+    )
+    .classList.remove(
+      'show'
+    );
+
+}
+
+
+
+/************************************************************
+ * SOURCE UI
+ ************************************************************/
+
+function updateSourceUI() {
+
+  document.getElementById(
+    'sourceLabel'
+  ).textContent =
+
+    source === 'drive'
+
+      ? 'Google Drive'
+
+      : 'Google Photos';
+
+
+  document
+    .getElementById(
+      'driveSource'
+    )
+    .classList.toggle(
+      'active',
+      source === 'drive'
+    );
+
+
+  document
+    .getElementById(
+      'photosSource'
+    )
+    .classList.toggle(
+      'active',
+      source === 'photos'
+    );
+
+}
+
+
+
+/************************************************************
+ * STATE
+ ************************************************************/
+
+function saveState() {
+
+  localStorage.setItem(
+    'mvm_source',
+    source
+  );
+
+
+  if (
+    currentFolderId
+  ) {
+
+    localStorage.setItem(
+      'mvm_folder',
+      currentFolderId
+    );
+
   }
-  document.getElementById('moveView').classList.add('show');
-  await loadMoveFolders();
+
+
+  localStorage.setItem(
+    'mvm_folder_name',
+    currentFolderName
+  );
+
 }
 
 
-/* =====================================================
-   LOAD ALL FOLDERS FOR MOVE
-===================================================== */
 
-async function loadMoveFolders() {
-  const select = document.getElementById('folderSelect');
-  select.innerHTML = '<option>Loading folders...</option>';
+/************************************************************
+ * STATUS
+ ************************************************************/
 
-  try {
-    const result = await apiGet('folders');
-    select.innerHTML = '';
+function showStatus(
+  text
+) {
 
-    result.folders.forEach(function(folder) {
-      const option = document.createElement('option');
-      option.value = folder.id;
-      option.textContent = folder.name;
-      select.appendChild(option);
-    });
+  const el =
+    document.getElementById(
+      'status'
+    );
 
-    if (!result.folders.length) {
-      select.innerHTML = '<option>No folders found</option>';
+
+  el.textContent =
+    text;
+
+
+  el.classList.add(
+    'show'
+  );
+
+
+  clearTimeout(
+    statusTimer
+  );
+
+
+  statusTimer =
+    setTimeout(
+      function() {
+
+        hideStatus();
+
+      },
+
+      4500
+
+    );
+
+}
+
+
+
+function hideStatus() {
+
+  document
+    .getElementById(
+      'status'
+    )
+    .classList.remove(
+      'show'
+    );
+
+}
+
+
+
+/************************************************************
+ * UTILITIES
+ ************************************************************/
+
+function wait(
+  ms
+) {
+
+  return new Promise(
+    function(resolve) {
+
+      setTimeout(
+        resolve,
+        ms
+      );
+
     }
-  } catch (error) {
-    select.innerHTML = '<option>Error loading folders</option>';
-    showToast(error.message);
-  }
+  );
+
 }
 
 
-/* =====================================================
-   MOVE FILE
-===================================================== */
 
-async function moveSelected() {
-  if (!selectedVideo) {
-    showToast('Select a video first.');
-    return;
-  }
+function formatBytes(
+  bytes
+) {
 
-  const destination = document.getElementById('folderSelect').value;
-  if (!destination) {
-    showToast('Select a destination folder.');
-    return;
+  if (
+    !bytes ||
+    bytes <= 0
+  ) {
+
+    return '0 B';
+
   }
 
-  showToast('Moving video...');
 
-  try {
-    await postAPI({
-      action: 'move',
-      key: API_KEY,
-      fileId: selectedVideo.id,
-      destinationFolderId: destination
-    });
+  const units = [
+    'B',
+    'KB',
+    'MB',
+    'GB',
+    'TB'
+  ];
 
-    showToast('Video moved successfully.');
-    selectedVideo = null;
-    document.getElementById('moveView').classList.remove('show');
-    await loadFolder(currentFolderId);
-  } catch (error) {
-    showToast(error.message);
-  }
+
+  const index =
+    Math.floor(
+      Math.log(bytes) /
+      Math.log(1024)
+    );
+
+
+  return (
+
+    bytes /
+    Math.pow(
+      1024,
+      index
+    )
+
+  )
+  .toFixed(
+    index === 0
+      ? 0
+      : 1
+  ) +
+  ' ' +
+  units[index];
+
 }
 
 
-/* =====================================================
-   POST API
-===================================================== */
 
-function postAPI(data) {
-  return new Promise(function(resolve, reject) {
-    const iframe = document.createElement('iframe');
-    iframe.name = 'api_' + Date.now();
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+function formatDuration(
+  milliseconds
+) {
 
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = API_URL;
-    form.target = iframe.name;
+  if (
+    !milliseconds
+  ) {
 
-    Object.keys(data).forEach(function(key) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = data[key];
-      form.appendChild(input);
-    });
+    return '';
 
-    document.body.appendChild(form);
-    form.submit();
-
-    setTimeout(function() {
-      form.remove();
-      iframe.remove();
-      resolve({ success: true });
-    }, 1800);
-  });
-}
-
-
-/* =====================================================
-   CREATE FOLDER
-===================================================== */
-
-async function createFolderUI() {
-  const name = prompt('New folder name:');
-  if (!name) return;
-
-  try {
-    await postAPI({
-      action: 'createFolder',
-      key: API_KEY,
-      parentId: currentFolderId,
-      name: name
-    });
-
-    showToast('Folder created.');
-    await loadFolder(currentFolderId);
-  } catch (error) {
-    showToast(error.message);
-  }
-}
-
-
-/* =====================================================
-   REFRESH
-===================================================== */
-
-function refresh() {
-  loadFolder(currentFolderId);
-}
-
-
-/* =====================================================
-   LOADING
-===================================================== */
-
-function showLoading() {
-  document.getElementById('list').innerHTML = '<div class="loading">Loading...</div>';
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-function showError(error) {
-  console.error(error);
-  document.getElementById('list').innerHTML =
-    `<div class="empty">
-      Unable to load Drive.
-      <br><br>
-      ${escapeHtml(error.message || String(error))}
-    </div>`;
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.classList.add('show');
-
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(function() {
-    toast.classList.remove('show');
-  }, 2500);
-}
-
-
-/* =====================================================
-   FILE SIZE
-===================================================== */
-
-function formatBytes(bytes) {
-  if (!bytes) return '';
-  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
-  let i = 0;
-  let size = bytes;
-
-  while (size >= 1024 && i < units.length - 1) {
-    size /= 1024;
-    i++;
   }
 
-  return size.toFixed(i === 0 ? 0 : 1) + ' ' + units[i];
+
+  const totalSeconds =
+    Math.floor(
+      Number(
+        milliseconds
+      ) / 1000
+    );
+
+
+  const hours =
+    Math.floor(
+      totalSeconds / 3600
+    );
+
+
+  const minutes =
+    Math.floor(
+      (
+        totalSeconds % 3600
+      ) / 60
+    );
+
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  if (hours) {
+
+    return (
+      hours +
+      ':' +
+      String(
+        minutes
+      ).padStart(
+        2,
+        '0'
+      ) +
+      ':' +
+      String(
+        seconds
+      ).padStart(
+        2,
+        '0'
+      )
+    );
+
+  }
+
+
+  return (
+    minutes +
+    ':' +
+    String(
+      seconds
+    ).padStart(
+      2,
+      '0'
+    )
+  );
+
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
 
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+function parseSeconds(
+  value
+) {
+
+  if (!value) {
+    return 0;
+  }
+
+
+  const match =
+    String(value)
+      .match(
+        /^([\d.]+)s$/
+      );
+
+
+  return match
+    ? Number(
+        match[1]
+      )
+    : 0;
+
 }
+
+
+
+/************************************************************
+ * ESCAPING
+ ************************************************************/
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value ?? ''
+  )
+
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+
+  .replace(
+    /</g,
+    '&lt;'
+  )
+
+  .replace(
+    />/g,
+    '&gt;'
+  )
+
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+
+  .replace(
+    /'/g,
+    '&#039;'
+  );
+
+}
+
+
+
+function escapeAttr(
+  value
+) {
+
+  return escapeHtml(
+    value
+  );
+
+}
+
+
+
+function escapeJs(
+  value
+) {
+
+  return String(
+    value ?? ''
+  )
+
+  .replace(
+    /\\/g,
+    '\\\\'
+  )
+
+  .replace(
+    /'/g,
+    "\\'"
+  )
+
+  .replace(
+    /\r/g,
+    '\\r'
+  )
+
+  .replace(
+    /\n/g,
+    '\\n'
+  );
+
+}
+
 
 </script>
+
+
 </body>
+
 </html>
